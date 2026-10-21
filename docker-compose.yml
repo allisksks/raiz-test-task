@@ -40,6 +40,7 @@ services:
       ONEC_ODATA_URL: ${ONEC_ODATA_URL:-}
       ONEC_USER: ${ONEC_USER:-}
       ONEC_PASSWORD: ${ONEC_PASSWORD:-}
+      PREPARED_DB_URL: ${PREPARED_DB_URL:-sqlite:///data/samples/prepared/prepared.sqlite}
     volumes:
       - ./data:/app/data:ro
     depends_on:

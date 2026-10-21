@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     onec_password: str = ""
     onec_files_dir: str = "data/samples/onec"
 
+    # Подготовленная база конкурентов: адрес SQLAlchemy
+    prepared_db_url: str = "sqlite:///data/samples/prepared/prepared.sqlite"
+
     @property
     def database_url(self) -> str:
         return (
