@@ -25,6 +25,7 @@ docker compose up -d --build --wait
 - Подключение к хранилищу «Market Map» в Superset создаётся автоматически под пользователем только на чтение (`BI_READER_USER`).
 - Проверка хранилища: `docker compose run --rm app check`.
 - Создать таблицы и загрузить справочники: `docker compose run --rm app migrate`.
+- Загрузить данные 1С: `docker compose run --rm app load-1c` (без настроек — из тестовой выгрузки; подключение к живой базе — [docs/integration-1c.md](docs/integration-1c.md)).
 
 ## Тестовые данные
 

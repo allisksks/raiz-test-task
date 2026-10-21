@@ -2,8 +2,10 @@
 
 import argparse
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
+from market_map.config import get_settings
 from market_map.db import get_engine, missing_schemas
 from market_map.migrate import migrate
 
@@ -34,6 +36,35 @@ def generate_samples(args: argparse.Namespace) -> int:
     return 0
 
 
+def _month(value: str) -> date:
+    return date.fromisoformat(f"{value}-01")
+
+
+def load_1c(args: argparse.Namespace) -> int:
+    """Загружает справочники, продажи и план маржи из 1С."""
+    from market_map.integrations.onec import FileSource, HttpSource, load_onec
+
+    settings = get_settings()
+    start, end = args.start, args.end
+    if args.path or not settings.onec_odata_url:
+        source = FileSource(args.path or Path(settings.onec_files_dir))
+    else:
+        source = HttpSource(settings.onec_odata_url, settings.onec_user, settings.onec_password)
+        if start is None:  # по умолчанию с живой базы — текущий и два предыдущих месяца
+            end = end or date.today().replace(day=1)
+            start = end
+            for _ in range(2):
+                start = (start - timedelta(days=1)).replace(day=1)
+
+    result = load_onec(get_engine(), source, start, end)
+    for name, count in result.stats.items():
+        print(f"{name}: {count}")
+    for entity, reason, _ in result.rejected[:20]:
+        print(f"Отклонено ({entity}): {reason}", file=sys.stderr)
+    print(f"Журнал загрузки: staging.load_run id={result.run_id}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="market-map")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -45,6 +76,12 @@ def main(argv: list[str] | None = None) -> int:
     gen.add_argument("--out", type=Path, default=Path("data/samples"))
     gen.add_argument("--seed", type=int, default=None)
     gen.set_defaults(func=generate_samples)
+
+    onec = commands.add_parser("load-1c", help=load_1c.__doc__)
+    onec.add_argument("--path", type=Path, help="папка с файлами выгрузки OData")
+    onec.add_argument("--from", dest="start", type=_month, help="первый месяц, YYYY-MM")
+    onec.add_argument("--to", dest="end", type=_month, help="последний месяц, YYYY-MM")
+    onec.set_defaults(func=load_1c)
 
     args = parser.parse_args(argv)
     if getattr(args, "seed", 0) is None:

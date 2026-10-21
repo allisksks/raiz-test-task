@@ -25,13 +25,12 @@ def test_cli_check(engine):
     assert main(["check"]) == 0
 
 
-def test_migrate_is_idempotent_and_seeds_reference(engine):
+def test_migrate_is_idempotent_and_seeds_reference(test_engine):
     from sqlalchemy import text
 
     from market_map.migrate import migrate
 
-    migrate(engine)
-    assert migrate(engine) == []
-    with engine.connect() as conn:
+    assert migrate(test_engine) == []
+    with test_engine.connect() as conn:
         assert conn.execute(text("select count(*) from core.region")).scalar() == 85
         assert conn.execute(text("select count(*) from core.channel")).scalar() == 6
