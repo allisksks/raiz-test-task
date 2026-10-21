@@ -1,0 +1,66 @@
+name: market-map
+
+x-db-env: &db-env
+  POSTGRES_HOST: db
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: ${POSTGRES_DB:-market_map}
+  POSTGRES_USER: ${POSTGRES_USER:-market_map}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-market_map}
+  BI_READER_USER: ${BI_READER_USER:-bi_reader}
+  BI_READER_PASSWORD: ${BI_READER_PASSWORD:-bi_reader}
+
+x-superset-env: &superset-env
+  <<: *db-env
+  SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY:-change-me-to-a-long-random-string}
+  SUPERSET_ADMIN_USER: ${SUPERSET_ADMIN_USER:-admin}
+  SUPERSET_ADMIN_PASSWORD: ${SUPERSET_ADMIN_PASSWORD:-admin}
+  SUPERSET_ADMIN_EMAIL: ${SUPERSET_ADMIN_EMAIL:-admin@example.com}
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment: *db-env
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Проверка хранилища; позже здесь же — ETL, сигналы и гипотезы
+  app:
+    build: .
+    profiles: ["tools"]  # не стартует с `up`, запускается через `docker compose run`
+    environment: *db-env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  superset-init:
+    build: ./superset
+    command: ["/app/bootstrap.sh"]
+    environment: *superset-env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  superset:
+    build: ./superset
+    environment: *superset-env
+    ports:
+      - "${SUPERSET_PORT:-8088}:8088"
+    depends_on:
+      superset-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8088/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  db-data:

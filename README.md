@@ -1,0 +1,40 @@
+# Market Map — интерактивная карта России
+
+Дашборд для мониторинга клиентов, конкурентов, номенклатуры и цен по регионам. Автоматически выявляет изменения на рынке и предлагает гипотезы об их причинах.
+
+План разработки: [PLAN.md](PLAN.md).
+
+## Состав
+
+| Компонент | Что делает |
+|---|---|
+| `db` | PostgreSQL 16 — хранилище: схемы `staging` → `core` → `marts` |
+| `app` | Python-пакет `market_map`: ETL (1С, подготовленная база), сигналы, гипотезы |
+| `superset` | Apache Superset — BI: карта РФ, drill-down, фильтры |
+
+## Запуск
+
+Нужны Docker и Docker Compose.
+
+```bash
+cp .env.example .env      # при необходимости поменяйте пароли
+docker compose up -d --build --wait
+```
+
+- Superset: http://localhost:8088 (логин и пароль — `SUPERSET_ADMIN_USER` / `SUPERSET_ADMIN_PASSWORD`, по умолчанию `admin` / `admin`).
+- Подключение к хранилищу «Market Map» в Superset создаётся автоматически под пользователем только на чтение (`BI_READER_USER`).
+- Проверка хранилища: `docker compose run --rm app check`.
+
+Остановить: `docker compose down`. Удалить вместе с данными: `docker compose down -v`.
+
+## Разработка
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+
+make lint     # ruff
+make test     # pytest (тесты с PostgreSQL пропускаются, если база не запущена)
+```
+
+Ветки и правила коммитов — в разделе 8 [PLAN.md](PLAN.md#8-git-процесс).
