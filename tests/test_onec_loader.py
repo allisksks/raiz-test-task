@@ -12,6 +12,11 @@ from market_map.integrations.onec.source import CONTRACTORS, SALES_FILE
 pytestmark = pytest.mark.db
 
 SAMPLES = Path(__file__).parents[1] / "data" / "samples" / "onec"
+# База общая для всех тестов сессии — считаем только клиентов
+CLIENT_REGIONS = (
+    "select count(*) from core.company_region cr join core.company c on c.id = cr.company_id "
+    "where c.kind = 'client'"
+)
 
 
 def _scalar(engine, sql: str, **params):
@@ -57,15 +62,15 @@ def test_clients_regions_and_channels(loaded, test_engine):
         )
         == "distribution RU-NVS"
     )
-    assert _scalar(test_engine, "select count(*) from core.company_region") == 33
+    assert _scalar(test_engine, CLIENT_REGIONS) == 33
 
 
 def test_reload_is_idempotent(loaded, test_engine):
     load_onec(test_engine, FileSource(SAMPLES))
     assert _scalar(test_engine, "select count(*) from core.sales_fact") == 6168
     assert _scalar(test_engine, "select count(*) from core.margin_plan") == 1956
-    assert _scalar(test_engine, "select count(*) from core.company") == 33
-    assert _scalar(test_engine, "select count(*) from core.company_region") == 33
+    assert _scalar(test_engine, "select count(*) from core.company where kind = 'client'") == 33
+    assert _scalar(test_engine, CLIENT_REGIONS) == 33
 
 
 def test_partial_reload_replaces_only_its_months(loaded, test_engine):

@@ -31,7 +31,9 @@ def apply_migrations(conn: Connection) -> list[str]:
     for version, sql in _migration_files():
         if version in applied:
             continue
-        conn.exec_driver_sql(sql)
+        # Через курсор драйвера без параметров: иначе «%» в тексте миграции считается плейсхолдером
+        with conn.connection.cursor() as cursor:
+            cursor.execute(sql)
         conn.execute(text(f"insert into {MIGRATIONS_TABLE} (version) values (:v)"), {"v": version})
         new.append(version)
     return new
