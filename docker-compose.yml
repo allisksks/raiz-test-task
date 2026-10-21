@@ -35,7 +35,13 @@ services:
   app:
     build: .
     profiles: ["tools"]  # не стартует с `up`, запускается через `docker compose run`
-    environment: *db-env
+    environment:
+      <<: *db-env
+      ONEC_ODATA_URL: ${ONEC_ODATA_URL:-}
+      ONEC_USER: ${ONEC_USER:-}
+      ONEC_PASSWORD: ${ONEC_PASSWORD:-}
+    volumes:
+      - ./data:/app/data:ro
     depends_on:
       db:
         condition: service_healthy

@@ -1,4 +1,4 @@
-.PHONY: up down reset lint format test check migrate samples
+.PHONY: up down reset lint format test check migrate samples load-1c
 
 up:
 	docker compose up -d --build --wait
@@ -28,3 +28,6 @@ migrate:
 
 samples:
 	python -m market_map generate-samples
+
+load-1c:
+	docker compose run --rm app load-1c

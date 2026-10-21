@@ -59,6 +59,7 @@ jobs:
       - run: docker compose up -d --build --wait
       - run: docker compose run --rm app migrate
       - run: docker compose run --rm app check
+      - run: docker compose run --rm app load-1c
       - name: Superset health
         run: curl -fs http://localhost:8088/health
       - if: failure()

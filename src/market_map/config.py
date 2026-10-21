@@ -14,6 +14,12 @@ class Settings(BaseSettings):
     postgres_user: str = "market_map"
     postgres_password: str = "market_map"
 
+    # 1С: стандартный интерфейс OData. Если адрес не задан, загружаются файлы выгрузки.
+    onec_odata_url: str | None = None
+    onec_user: str = ""
+    onec_password: str = ""
+    onec_files_dir: str = "data/samples/onec"
+
     @property
     def database_url(self) -> str:
         return (
