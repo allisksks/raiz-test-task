@@ -48,3 +48,20 @@ def channel_code(value: str | None) -> str | None:
     if not value:
         return None
     return _CHANNEL_INDEX.get(_key(value))
+
+
+_PRICE_JUNK = re.compile(r"[₽\s ]|руб\.?|р\.(?=$)", re.IGNORECASE)
+
+
+def parse_price(value: str | float | int | None) -> float | None:
+    """Цена из текста: `1234.50`, `1 234,50 ₽`, `1 234 руб.` → 1234.5; None — если не цена."""
+    if value is None:
+        return None
+    if isinstance(value, int | float):
+        return float(value) if value > 0 else None
+    text = _PRICE_JUNK.sub("", value).replace(",", ".")
+    try:
+        price = float(text)
+    except ValueError:
+        return None
+    return price if price > 0 else None

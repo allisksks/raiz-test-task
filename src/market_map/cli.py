@@ -65,6 +65,20 @@ def load_1c(args: argparse.Namespace) -> int:
     return 0
 
 
+def load_prepared(args: argparse.Namespace) -> int:
+    """Загружает подготовленную базу конкурентов и цен."""
+    from market_map.integrations.prepared import load_prepared as load
+
+    url = f"sqlite:///{args.path}" if args.path else get_settings().prepared_db_url
+    result = load(get_engine(), url)
+    for name, count in result.stats.items():
+        print(f"{name}: {count}")
+    for entity, reason, _ in result.rejected[:20]:
+        print(f"Отклонено ({entity}): {reason}", file=sys.stderr)
+    print(f"Журнал загрузки: staging.load_run id={result.run_id}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="market-map")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -82,6 +96,10 @@ def main(argv: list[str] | None = None) -> int:
     onec.add_argument("--from", dest="start", type=_month, help="первый месяц, YYYY-MM")
     onec.add_argument("--to", dest="end", type=_month, help="последний месяц, YYYY-MM")
     onec.set_defaults(func=load_1c)
+
+    prepared = commands.add_parser("load-prepared", help=load_prepared.__doc__)
+    prepared.add_argument("--path", type=Path, help="файл SQLite с подготовленной базой")
+    prepared.set_defaults(func=load_prepared)
 
     args = parser.parse_args(argv)
     if getattr(args, "seed", 0) is None:

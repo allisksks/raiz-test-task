@@ -5,7 +5,6 @@
 """
 
 import json
-from dataclasses import dataclass, field
 from datetime import date
 
 from sqlalchemy import Connection, Engine, text
@@ -18,21 +17,10 @@ from market_map.integrations.onec.source import (
     OneCSource,
     months,
 )
+from market_map.loads import LoadResult, finish_run, product_group_ids, source_ids, start_run
 from market_map.normalize import channel_code, region_code
 
 SOURCE_CODE = "1c"
-
-
-@dataclass
-class LoadResult:
-    run_id: int
-    stats: dict[str, int] = field(default_factory=dict)
-    rejected: list[tuple[str, str, dict]] = field(
-        default_factory=list
-    )  # (сущность, причина, запись)
-
-    def reject(self, entity: str, reason: str, row: dict) -> None:
-        self.rejected.append((entity, reason, row))
 
 
 def _period(row: dict) -> date:
@@ -50,18 +38,6 @@ def _ensure_source(conn: Connection) -> int:
         ),
         {"code": SOURCE_CODE},
     ).scalar_one()
-
-
-def _ids(conn: Connection, table: str, source_id: int) -> dict[str, int]:
-    rows = conn.execute(
-        text(f"select source_key, id from core.{table} where source_id = :s"), {"s": source_id}
-    )
-    return {key: id_ for key, id_ in rows}
-
-
-def _group_ids(conn: Connection) -> dict[str, int]:
-    rows = conn.execute(text("select source_key, id from core.product_group"))
-    return {key: id_ for key, id_ in rows}
 
 
 def _save_raw(conn: Connection, run_id: int, entity: str, rows: list[dict]) -> None:
@@ -82,7 +58,7 @@ def _load_nomenclature(conn: Connection, source_id: int, rows: list[dict], resul
             ),
             {"n": name, "k": ref_key},
         )
-    group_ids = _group_ids(conn)
+    group_ids = product_group_ids(conn)
 
     products = []
     for r in rows:
@@ -167,7 +143,7 @@ def _load_presence(
     for r in sales:
         key = r["Контрагент_Key"]
         first_sale[key] = min(first_sale.get(key, date.max), _period(r))
-    client_ids = _ids(conn, "company", source_id)
+    client_ids = source_ids(conn, "company", source_id)
     for ref_key, region in regions.items():
         params = {
             "c": client_ids[ref_key],
@@ -205,8 +181,8 @@ def _replace_periods(conn: Connection, table: str, source_id: int, periods: set[
 def _load_sales(
     conn: Connection, source_id: int, rows: list[dict], periods: set[date], result: LoadResult
 ) -> None:
-    client_ids = _ids(conn, "company", source_id)
-    product_ids = _ids(conn, "product", source_id)
+    client_ids = source_ids(conn, "company", source_id)
+    product_ids = source_ids(conn, "product", source_id)
     facts: dict[tuple, dict] = {}
     for r in rows:
         client = client_ids.get(r["Контрагент_Key"])
@@ -241,8 +217,8 @@ def _load_sales(
 def _load_margin_plan(
     conn: Connection, source_id: int, rows: list[dict], periods: set[date], result: LoadResult
 ) -> None:
-    client_ids = _ids(conn, "company", source_id)
-    group_ids = _group_ids(conn)
+    client_ids = source_ids(conn, "company", source_id)
+    group_ids = product_group_ids(conn)
     plans = []
     for r in rows:
         client = client_ids.get(r["Контрагент_Key"])
@@ -271,42 +247,6 @@ def _load_margin_plan(
     result.stats["margin_plan_rows"] = len(plans)
 
 
-def _start_run(engine: Engine, params: dict) -> int:
-    with engine.begin() as conn:
-        return conn.execute(
-            text("insert into staging.load_run (source_code, params) values (:s, :p) returning id"),
-            {"s": SOURCE_CODE, "p": json.dumps(params)},
-        ).scalar_one()
-
-
-def _finish_run(engine: Engine, result: LoadResult, error: str | None = None) -> None:
-    with engine.begin() as conn:
-        conn.execute(
-            text(
-                "update staging.load_run set finished_at = now(), status = :st, stats = :stats, "
-                "error = :e where id = :id"
-            ),
-            {
-                "id": result.run_id,
-                "st": "failed" if error else "success",
-                "stats": json.dumps(result.stats),
-                "e": error,
-            },
-        )
-        if result.rejected:
-            conn.execute(
-                text(
-                    "insert into staging.load_reject (run_id, entity, reason, payload) "
-                    "values (:r, :e, :reason, :p)"
-                ),
-                [
-                    {"r": result.run_id, "e": e, "reason": reason,
-                     "p": json.dumps(row, ensure_ascii=False)}
-                    for e, reason, row in result.rejected
-                ],
-            )  # fmt: skip
-
-
 def load_onec(
     engine: Engine, source: OneCSource, start: date | None = None, end: date | None = None
 ) -> LoadResult:
@@ -315,11 +255,10 @@ def load_onec(
     Без периода загружается всё, что отдаёт источник. Изменения в core пишутся одной
     транзакцией: при ошибке core не меняется, а запуск помечается в журнале как failed.
     """
-    result = LoadResult(
-        run_id=_start_run(
-            engine,
-            {"start": start and start.isoformat(), "end": end and end.isoformat()},
-        )
+    result = start_run(
+        engine,
+        SOURCE_CODE,
+        {"start": start and start.isoformat(), "end": end and end.isoformat()},
     )
     try:
         contractors = source.catalog(CONTRACTORS)
@@ -351,7 +290,7 @@ def load_onec(
             _load_margin_plan(conn, source_id, plan, periods, result)
         result.stats["rejected"] = len(result.rejected)
     except Exception as exc:
-        _finish_run(engine, result, error=repr(exc))
+        finish_run(engine, result, error=repr(exc))
         raise
-    _finish_run(engine, result)
+    finish_run(engine, result)
     return result

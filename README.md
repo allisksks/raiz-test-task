@@ -26,6 +26,7 @@ docker compose up -d --build --wait
 - Проверка хранилища: `docker compose run --rm app check`.
 - Создать таблицы и загрузить справочники: `docker compose run --rm app migrate`.
 - Загрузить данные 1С: `docker compose run --rm app load-1c` (без настроек — из тестовой выгрузки; подключение к живой базе — [docs/integration-1c.md](docs/integration-1c.md)).
+- Загрузить подготовленную базу конкурентов: `docker compose run --rm app load-prepared` (после 1С — с её номенклатурой сопоставляются товары конкурентов; подробности — [docs/integration-prepared-db.md](docs/integration-prepared-db.md)).
 
 ## Тестовые данные
 
