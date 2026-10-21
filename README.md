@@ -24,6 +24,11 @@ docker compose up -d --build --wait
 - Superset: http://localhost:8088 (логин и пароль — `SUPERSET_ADMIN_USER` / `SUPERSET_ADMIN_PASSWORD`, по умолчанию `admin` / `admin`).
 - Подключение к хранилищу «Market Map» в Superset создаётся автоматически под пользователем только на чтение (`BI_READER_USER`).
 - Проверка хранилища: `docker compose run --rm app check`.
+- Создать таблицы и загрузить справочники: `docker compose run --rm app migrate`.
+
+## Тестовые данные
+
+Выгрузка «как из 1С» и подготовленная база цен конкурентов лежат в `data/samples/`. Формат и заложенные сценарии описаны в [docs/test-data.md](docs/test-data.md). Пересоздать: `make samples`.
 
 Остановить: `docker compose down`. Удалить вместе с данными: `docker compose down -v`.
 

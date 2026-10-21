@@ -27,6 +27,9 @@ market-map = "market_map.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+market_map = ["migrations/*.sql"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py312"
@@ -39,3 +42,7 @@ testpaths = ["tests"]
 markers = [
     "db: тесты, которым нужен запущенный PostgreSQL (POSTGRES_* из окружения)",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# Табличные данные каталога читаются лучше в одну строку
+"src/market_map/samples/catalog.py" = ["E501"]
