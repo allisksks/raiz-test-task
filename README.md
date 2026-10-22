@@ -28,6 +28,8 @@ docker compose up -d --build --wait
 - Загрузить данные 1С: `docker compose run --rm app load-1c` (без настроек — из тестовой выгрузки; подключение к живой базе — [docs/integration-1c.md](docs/integration-1c.md)).
 - Загрузить подготовленную базу конкурентов: `docker compose run --rm app load-prepared` (после 1С — с её номенклатурой сопоставляются товары конкурентов; подробности — [docs/integration-prepared-db.md](docs/integration-prepared-db.md)).
 
+Витрины для BI (схема `marts`) пересчитываются автоматически после каждой загрузки; что в них и как считается — [docs/marts.md](docs/marts.md).
+
 ## Тестовые данные
 
 Выгрузка «как из 1С» и подготовленная база цен конкурентов лежат в `data/samples/`. Формат и заложенные сценарии описаны в [docs/test-data.md](docs/test-data.md). Пересоздать: `make samples`.

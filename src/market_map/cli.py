@@ -27,6 +27,15 @@ def migrate_cmd(args: argparse.Namespace) -> int:
     return 0
 
 
+def refresh_marts_cmd(args: argparse.Namespace) -> int:
+    """Пересчитывает материализованные витрины."""
+    from market_map.marts import refresh_marts
+
+    refresh_marts(get_engine())
+    print("Витрины пересчитаны")
+    return 0
+
+
 def generate_samples(args: argparse.Namespace) -> int:
     """Генерирует тестовые данные 1С и подготовленной базы."""
     from market_map.samples import generate
@@ -85,6 +94,9 @@ def main(argv: list[str] | None = None) -> int:
 
     commands.add_parser("check", help=check.__doc__).set_defaults(func=check)
     commands.add_parser("migrate", help=migrate_cmd.__doc__).set_defaults(func=migrate_cmd)
+    commands.add_parser("refresh-marts", help=refresh_marts_cmd.__doc__).set_defaults(
+        func=refresh_marts_cmd
+    )
 
     gen = commands.add_parser("generate-samples", help=generate_samples.__doc__)
     gen.add_argument("--out", type=Path, default=Path("data/samples"))
