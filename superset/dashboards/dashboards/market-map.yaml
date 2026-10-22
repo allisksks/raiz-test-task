@@ -21,6 +21,7 @@ position:
     - ROW-1
     - ROW-2
     - ROW-3
+    - ROW-4
     parents:
     - ROOT_ID
   HEADER_ID:
@@ -82,7 +83,7 @@ position:
     - GRID_ID
     - ROW-0
     meta:
-      chartId: 1
+      chartId: 3
       uuid: 9fde165e-be7e-4276-a480-3402c31372eb
       width: 3
       height: 30
@@ -97,7 +98,7 @@ position:
     - GRID_ID
     - ROW-0
     meta:
-      chartId: 6
+      chartId: 4
       uuid: 3dc45c7a-fbe9-498e-8a9d-e476e9b68fc9
       width: 3
       height: 30
@@ -123,7 +124,7 @@ position:
     - GRID_ID
     - ROW-1
     meta:
-      chartId: 4
+      chartId: 1
       uuid: b7bdcdf9-36d1-4b54-a5d3-7c21a2f54dbd
       width: 6
       height: 80
@@ -139,7 +140,7 @@ position:
     - GRID_ID
     - ROW-1
     meta:
-      chartId: 11
+      chartId: 8
       uuid: c3b47032-b7df-402c-86cd-c9090d069e7b
       width: 6
       height: 80
@@ -164,7 +165,7 @@ position:
     - GRID_ID
     - ROW-2
     meta:
-      chartId: 12
+      chartId: 13
       uuid: a65b783c-a471-42be-afb4-dceafae293ca
       width: 12
       height: 60
@@ -189,12 +190,39 @@ position:
     - GRID_ID
     - ROW-3
     meta:
-      chartId: 7
+      chartId: 6
       uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
       width: 12
       height: 80
       sliceName: "\u041B\u0435\u043D\u0442\u0430 \u0441\u0438\u0433\u043D\u0430\u043B\
         \u043E\u0432"
+  ROW-4:
+    type: ROW
+    id: ROW-4
+    children:
+    - CHART-sources
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-sources:
+    type: CHART
+    id: CHART-sources
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-4
+    meta:
+      chartId: 5
+      uuid: 6646d67f-cdbc-4edb-bf05-f9391fea3b4f
+      width: 12
+      height: 50
+      sliceName: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u0434\u0430\
+        \u043D\u043D\u044B\u0445: \u0441\u0432\u0435\u0436\u0435\u0441\u0442\u044C\
+        \ \u0438 \u0434\u043E\u0441\u0442\u043E\u0432\u0435\u0440\u043D\u043E\u0441\
+        \u0442\u044C"
 metadata:
   native_filter_configuration:
   - id: NATIVE_FILTER-e875e996c0be
