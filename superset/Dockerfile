@@ -7,3 +7,5 @@ USER superset
 
 COPY --chown=superset superset_config.py /app/pythonpath/superset_config.py
 COPY --chown=superset --chmod=755 bootstrap.sh /app/bootstrap.sh
+# Выгрузка дашбордов (superset/build_dashboards.py --export) — импортируется в bootstrap.sh
+COPY --chown=superset dashboards /app/dashboards

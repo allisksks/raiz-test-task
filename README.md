@@ -12,6 +12,8 @@
 | `app` | Python-пакет `market_map`: ETL (1С, подготовленная база), сигналы, гипотезы |
 | `superset` | Apache Superset — BI: карта РФ, drill-down, фильтры |
 
+![Карта рынка](docs/img/market-map.png)
+
 ## Запуск
 
 Нужны Docker и Docker Compose.
@@ -21,7 +23,7 @@ cp .env.example .env      # при необходимости поменяйте
 docker compose up -d --build --wait
 ```
 
-- Superset: http://localhost:8088 (логин и пароль — `SUPERSET_ADMIN_USER` / `SUPERSET_ADMIN_PASSWORD`, по умолчанию `admin` / `admin`).
+- Superset: http://localhost:8088 (логин и пароль — `SUPERSET_ADMIN_USER` / `SUPERSET_ADMIN_PASSWORD`, по умолчанию `admin` / `admin`). Дашборды «Карта рынка» и «Диагностика: сигнал → причина» создаются автоматически — [docs/dashboards.md](docs/dashboards.md).
 - Подключение к хранилищу «Market Map» в Superset создаётся автоматически под пользователем только на чтение (`BI_READER_USER`).
 - Проверка хранилища: `docker compose run --rm app check`.
 - Создать таблицы и загрузить справочники: `docker compose run --rm app migrate`.

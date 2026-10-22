@@ -1,0 +1,24 @@
+slice_name: "\u041A\u0430\u0440\u0442\u0430: \u043E\u0442\u043A\u043B\u043E\u043D\u0435\
+  \u043D\u0438\u0435 \u043C\u0430\u0440\u0436\u0438 \u043E\u0442 \u043F\u043B\u0430\
+  \u043D\u0430, \u043F.\u043F."
+description: null
+certified_by: null
+certification_details: null
+viz_type: country_map
+params:
+  viz_type: country_map
+  adhoc_filters: []
+  select_country: russia
+  entity: map_code
+  metric:
+    expressionType: SQL
+    sqlExpression: AVG(margin_pct_deviation) * 100
+    label: "\u041E\u0442\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u043C\u0430\
+      \u0440\u0436\u0438, \u043F.\u043F."
+  linear_color_scheme: red_yellow_blue
+  number_format: .1f
+query_context: null
+cache_timeout: null
+uuid: b7bdcdf9-36d1-4b54-a5d3-7c21a2f54dbd
+version: 1.0.0
+dataset_uuid: 9eb235dd-bdd9-4b38-98ab-4ab4104e7aa6

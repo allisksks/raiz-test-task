@@ -47,3 +47,5 @@ markers = [
 [tool.ruff.lint.per-file-ignores]
 # Табличные данные каталога читаются лучше в одну строку
 "src/market_map/samples/catalog.py" = ["E501"]
+# Раскладка дашбордов — таблица строк и ширин, читается лучше в одну строку
+"superset/build_dashboards.py" = ["E501"]

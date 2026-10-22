@@ -63,6 +63,8 @@ jobs:
       - run: docker compose run --rm app load-prepared
       - name: Marts readable by BI user
         run: docker compose exec -T -e PGPASSWORD=bi_reader db psql -h localhost -U bi_reader -d market_map -v ON_ERROR_STOP=1 -c 'select count(*) from marts.region_summary' -c 'select count(*) from marts.price_comparison' -c 'select count(*) from marts.signals' -c 'select count(*) from marts.hypotheses'
+      - name: Dashboards imported
+        run: test "$(docker compose exec -T db psql -U market_map -d superset -tAc 'select count(*) from dashboards')" = 2
       - name: Superset health
         run: curl -fs http://localhost:8088/health
       - if: failure()

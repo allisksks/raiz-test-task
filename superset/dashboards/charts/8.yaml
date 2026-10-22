@@ -1,0 +1,25 @@
+slice_name: "\u0414\u043E\u043B\u0438 \u0440\u044B\u043D\u043A\u0430 (\u043E\u0446\
+  \u0435\u043D\u043A\u0430), %"
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  viz_type: echarts_timeseries_line
+  adhoc_filters: []
+  x_axis: month
+  time_grain_sqla: P1M
+  metrics:
+  - expressionType: SQL
+    sqlExpression: AVG(share) * 100
+    label: "\u0414\u043E\u043B\u044F, %"
+  groupby:
+  - player
+  row_limit: 10000
+  show_legend: true
+  y_axis_format: .0f
+query_context: null
+cache_timeout: null
+uuid: 34cef677-f124-4472-ba55-47cffeb4fa32
+version: 1.0.0
+dataset_uuid: dc7ba009-e298-48fa-b1a4-819dc15fa12b
