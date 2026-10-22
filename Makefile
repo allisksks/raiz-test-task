@@ -1,4 +1,4 @@
-.PHONY: up down reset lint format test check migrate samples load-1c load-prepared refresh-marts
+.PHONY: up down reset lint format test check migrate samples load-1c load-prepared refresh-marts detect-signals
 
 up:
 	docker compose up -d --build --wait
@@ -37,3 +37,6 @@ load-prepared:
 
 refresh-marts:
 	docker compose run --rm app refresh-marts
+
+detect-signals:
+	docker compose run --rm app detect-signals

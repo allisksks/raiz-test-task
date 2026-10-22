@@ -18,7 +18,7 @@ from market_map.integrations.onec.source import (
     months,
 )
 from market_map.loads import LoadResult, finish_run, product_group_ids, source_ids, start_run
-from market_map.marts import refresh_marts
+from market_map.marts import refresh_derived
 from market_map.normalize import channel_code, region_code
 
 SOURCE_CODE = "1c"
@@ -293,6 +293,6 @@ def load_onec(
     except Exception as exc:
         finish_run(engine, result, error=repr(exc))
         raise
-    refresh_marts(engine)
+    refresh_derived(engine)
     finish_run(engine, result)
     return result
