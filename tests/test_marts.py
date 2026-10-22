@@ -120,3 +120,18 @@ def test_new_competitor_takes_share_only_after_entry(db):
         )
     )
     assert own["2026-07"] < own["2026-06"]
+
+
+def test_source_freshness(db):
+    rows = {
+        code: (reliability, status, records)
+        for code, reliability, status, records in _all(
+            db, "select code, reliability, status, records from marts.source_freshness"
+        )
+    }
+    assert rows["1c"] == ("A", "актуален", 6168)
+    assert rows["prepared_db"][1:] == ("актуален", 11753)
+    # у подготовленной базы — сумма по источникам наблюдений
+    children = sum(r for code, (_, _, r) in rows.items() if code.startswith("prepared_db:"))
+    assert children == rows["prepared_db"][2]
+    assert rows["prepared_db:4"][:2] == ("C", "по мере поступления")

@@ -59,7 +59,7 @@ def where(sql: str) -> dict:
 
 DATASETS = (
     "region_summary", "presence", "signals", "hypotheses", "price_breakdown",
-    "price_comparison", "market_share", "margin_plan_fact", "sales",
+    "price_comparison", "market_share", "margin_plan_fact", "sales", "source_freshness",
 )  # fmt: skip
 
 TABLE = {
@@ -83,7 +83,10 @@ VERBOSE = {
     "value": "Значение", "unit": "Ед.", "provenance": "Происхождение", "note": "Пояснение",
     "client": "Клиент", "channel": "Канал", "product_group": "Группа товаров",
     "player": "Участник", "month": "Месяц", "observed_at": "Неделя", "signal_id": "№ сигнала",
-    "provenance_name": "Факт / оценка",
+    "provenance_name": "Факт / оценка", "name": "Источник", "kind": "Тип",
+    "reliability": "Достоверность", "refresh_period_name": "Периодичность", "last_load": "Загружено",
+    "last_data_text": "Данные по", "records": "Записей", "failed_loads_7d": "Сбоев за 7 дней",
+    "status": "Статус",
 }  # fmt: skip
 
 CHARTS = {
@@ -211,6 +214,26 @@ CHARTS = {
             column_config={"value": {"d3NumberFormat": ",.2f"}},
         ),
     ),  # fmt: skip
+    "sources": dict(
+        name="Источники данных: свежесть и достоверность",
+        dataset="source_freshness",
+        viz_type="table",
+        params=dict(
+            **{**TABLE, "table_timestamp_format": "%d.%m.%Y %H:%M"},
+            all_columns=[
+                "name",
+                "kind",
+                "reliability",
+                "refresh_period_name",
+                "last_load",
+                "last_data_text",
+                "records",
+                "failed_loads_7d",
+                "status",
+            ],
+            order_by_cols=[json.dumps(["reliability", True])],
+        ),
+    ),
     "market_share": dict(
         name="Доли рынка (оценка), %",
         dataset="market_share",
@@ -298,6 +321,7 @@ DASHBOARDS = {
             [("map_margin", 6, 80), ("map_new_competitors", 6, 80)],
             [("regions", 12, 60)],
             [("signals", 12, 80)],
+            [("sources", 12, 50)],
         ],
         filters=[
             ("Регион", "region", "region_summary", None, ()),
@@ -459,8 +483,8 @@ def native_filters(filters: list, datasets: dict, charts: dict, slug: str) -> li
     return result
 
 
-def ensure_dashboards(api: Superset, datasets: dict, charts: dict) -> list[int]:
-    ids = []
+def ensure_dashboards(api: Superset, datasets: dict, charts: dict) -> dict[str, int]:
+    ids = {}
     uuids = chart_uuids(api, list(charts.values()))
     for slug, dashboard in DASHBOARDS.items():
         used = [item[0] for row in dashboard["rows"] for item in row if item[0] != "markdown"]
@@ -493,19 +517,30 @@ def ensure_dashboards(api: Superset, datasets: dict, charts: dict) -> list[int]:
             chart = api.request("GET", f"/api/v1/chart/{charts[key]}")["result"]
             linked = {d["id"] for d in chart.get("dashboards", [])} | {dashboard_id}
             api.request("PUT", f"/api/v1/chart/{charts[key]}", json={"dashboards": sorted(linked)})
-        ids.append(dashboard_id)
+        ids[slug] = dashboard_id
     return ids
 
 
-def export(api: Superset, dashboard_ids: list[int]) -> None:
-    q = "!(" + ",".join(map(str, dashboard_ids)) + ")"
+def export(api: Superset, charts: dict[str, int], dashboards: dict[str, int]) -> None:
+    """Выгрузка штатным экспортом. Файлы графиков и дашбордов называются по ключам из
+    CHARTS/DASHBOARDS, а не по id: id меняются от стенда к стенду, и без этого каждая
+    пересборка «меняла» бы все файлы."""
+    names = {
+        "charts": {chart_id: key for key, chart_id in charts.items()},
+        "dashboards": {dashboard_id: slug for slug, dashboard_id in dashboards.items()},
+    }
+    q = "!(" + ",".join(map(str, dashboards.values())) + ")"
     response = api.client.get("/api/v1/dashboard/export/", params={"q": q})
     response.raise_for_status()
     shutil.rmtree(EXPORT_DIR, ignore_errors=True)
     with zipfile.ZipFile(io.BytesIO(response.content)) as archive:
         for name in archive.namelist():
-            # dashboard_export_<дата>/charts/… → charts/…
+            # dashboard_export_<дата>/charts/…_<id>.yaml → charts/<ключ>.yaml
             relative = Path(*Path(name).parts[1:])
+            kind = relative.parts[0]
+            if kind in names:
+                object_id = int(re.search(r"(\d+)\.yaml$", relative.name).group(1))
+                relative = Path(kind, f"{names[kind][object_id]}.yaml")
             target = EXPORT_DIR / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(archive.read(name))
@@ -529,7 +564,7 @@ def main() -> None:
     dashboards = ensure_dashboards(api, datasets, charts)
     print(f"Датасетов: {len(datasets)}, графиков: {len(charts)}, дашбордов: {len(dashboards)}")
     if args.export:
-        export(api, dashboards)
+        export(api, charts, dashboards)
         print(f"Выгружено в {EXPORT_DIR}")
 
 

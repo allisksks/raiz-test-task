@@ -30,7 +30,7 @@ docker compose up -d --build --wait
 - Загрузить данные 1С: `docker compose run --rm app load-1c` (без настроек — из тестовой выгрузки; подключение к живой базе — [docs/integration-1c.md](docs/integration-1c.md)).
 - Загрузить подготовленную базу конкурентов: `docker compose run --rm app load-prepared` (после 1С — с её номенклатурой сопоставляются товары конкурентов; подробности — [docs/integration-prepared-db.md](docs/integration-prepared-db.md)).
 
-Витрины для BI (схема `marts`) и сигналы о рыночных изменениях пересчитываются автоматически после каждой загрузки: что в витринах — [docs/marts.md](docs/marts.md), какие бывают сигналы — [docs/signals.md](docs/signals.md), как строятся гипотезы о причинах — [docs/hypotheses.md](docs/hypotheses.md).
+Витрины для BI (схема `marts`) и сигналы о рыночных изменениях пересчитываются автоматически после каждой загрузки: что в витринах — [docs/marts.md](docs/marts.md), какие бывают сигналы — [docs/signals.md](docs/signals.md), как строятся гипотезы о причинах — [docs/hypotheses.md](docs/hypotheses.md), откуда берутся данные и насколько им можно доверять — [docs/data-sources.md](docs/data-sources.md).
 
 ## Тестовые данные
 

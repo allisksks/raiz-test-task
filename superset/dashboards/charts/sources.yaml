@@ -1,0 +1,32 @@
+slice_name: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u0434\u0430\u043D\
+  \u043D\u044B\u0445: \u0441\u0432\u0435\u0436\u0435\u0441\u0442\u044C \u0438 \u0434\
+  \u043E\u0441\u0442\u043E\u0432\u0435\u0440\u043D\u043E\u0441\u0442\u044C"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters: []
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y %H:%M'
+  all_columns:
+  - name
+  - kind
+  - reliability
+  - refresh_period_name
+  - last_load
+  - last_data_text
+  - records
+  - failed_loads_7d
+  - status
+  order_by_cols:
+  - '["reliability", true]'
+query_context: null
+cache_timeout: null
+uuid: 6646d67f-cdbc-4edb-bf05-f9391fea3b4f
+version: 1.0.0
+dataset_uuid: 81891302-6477-4488-b6fc-e6c89eb9c2c5
