@@ -1,0 +1,286 @@
+dashboard_title: "\u041A\u0430\u0440\u0442\u0430 \u0440\u044B\u043D\u043A\u0430"
+description: null
+css: null
+slug: market-map
+certified_by: null
+certification_details: null
+published: true
+uuid: 424c1209-b6d4-47d4-8ea2-07ce07e314a6
+position:
+  DASHBOARD_VERSION_KEY: v2
+  ROOT_ID:
+    type: ROOT
+    id: ROOT_ID
+    children:
+    - GRID_ID
+  GRID_ID:
+    type: GRID
+    id: GRID_ID
+    children:
+    - ROW-0
+    - ROW-1
+    - ROW-2
+    - ROW-3
+    - ROW-4
+    parents:
+    - ROOT_ID
+  HEADER_ID:
+    type: HEADER
+    id: HEADER_ID
+    meta:
+      text: "\u041A\u0430\u0440\u0442\u0430 \u0440\u044B\u043D\u043A\u0430"
+  ROW-0:
+    type: ROW
+    id: ROW-0
+    children:
+    - MARKDOWN-0-0
+    - CHART-kpi_critical
+    - CHART-kpi_new_competitors
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  MARKDOWN-0-0:
+    type: MARKDOWN
+    id: MARKDOWN-0-0
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-0
+    meta:
+      code: "### \u0418\u043D\u0442\u0435\u0440\u0430\u043A\u0442\u0438\u0432\u043D\
+        \u0430\u044F \u043A\u0430\u0440\u0442\u0430 \u0440\u044B\u043D\u043A\u0430\
+        \n\n\u041A\u0430\u0440\u0442\u0430 \u043F\u043E \u0440\u0435\u0433\u0438\u043E\
+        \u043D\u0430\u043C \u043F\u0440\u0438\u0441\u0443\u0442\u0441\u0442\u0432\u0438\
+        \u044F: \u0433\u0434\u0435 \u043C\u0430\u0440\u0436\u0430 \u043A\u043B\u0438\
+        \u0435\u043D\u0442\u043E\u0432 \u043D\u0438\u0436\u0435 \u043F\u043B\u0430\
+        \u043D\u0430 \u0438 \u0433\u0434\u0435 \u043F\u043E\u044F\u0432\u0438\u043B\
+        \u0438\u0441\u044C \u043D\u043E\u0432\u044B\u0435\n\u043A\u043E\u043D\u043A\
+        \u0443\u0440\u0435\u043D\u0442\u044B. \u041B\u0435\u043D\u0442\u0430 \u0441\
+        \u0438\u0433\u043D\u0430\u043B\u043E\u0432 \u2014 \u0437\u043D\u0430\u0447\
+        \u0438\u043C\u044B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F\
+        , \u043F\u0435\u0440\u0435\u0445\u043E\u0434 \u043A \u043F\u0440\u0438\u0447\
+        \u0438\u043D\u0430\u043C \u2014 \u0434\u0430\u0448\u0431\u043E\u0440\u0434\
+        \n**\xAB\u0414\u0438\u0430\u0433\u043D\u043E\u0441\u0442\u0438\u043A\u0430\
+        : \u0441\u0438\u0433\u043D\u0430\u043B \u2192 \u043F\u0440\u0438\u0447\u0438\
+        \u043D\u0430\xBB**.\n\n\u0414\u0430\u043D\u043D\u044B\u0435: \u0444\u0430\u043A\
+        \u0442 (1\u0421, \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433\
+        \ \u0446\u0435\u043D), \u043E\u0446\u0435\u043D\u043A\u0430 (\u0434\u043E\u043B\
+        \u0438 \u0440\u044B\u043D\u043A\u0430), \u0433\u0438\u043F\u043E\u0442\u0435\
+        \u0437\u0430 (\u043F\u0440\u0438\u0447\u0438\u043D\u044B) \u2014 \u043F\u043E\
+        \u043C\u0435\u0447\u0435\u043D\u043E \u0432 \u0442\u0430\u0431\u043B\u0438\
+        \u0446\u0430\u0445."
+      width: 6
+      height: 30
+  CHART-kpi_critical:
+    type: CHART
+    id: CHART-kpi_critical
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-0
+    meta:
+      chartId: 9
+      uuid: 9fde165e-be7e-4276-a480-3402c31372eb
+      width: 3
+      height: 30
+      sliceName: "\u041A\u0440\u0438\u0442\u0438\u0447\u043D\u044B\u0435 \u0441\u0438\
+        \u0433\u043D\u0430\u043B\u044B"
+  CHART-kpi_new_competitors:
+    type: CHART
+    id: CHART-kpi_new_competitors
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-0
+    meta:
+      chartId: 6
+      uuid: 3dc45c7a-fbe9-498e-8a9d-e476e9b68fc9
+      width: 3
+      height: 30
+      sliceName: "\u041D\u043E\u0432\u044B\u0435 \u043A\u043E\u043D\u043A\u0443\u0440\
+        \u0435\u043D\u0442\u044B"
+  ROW-1:
+    type: ROW
+    id: ROW-1
+    children:
+    - CHART-map_margin
+    - CHART-map_new_competitors
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-map_margin:
+    type: CHART
+    id: CHART-map_margin
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-1
+    meta:
+      chartId: 2
+      uuid: b7bdcdf9-36d1-4b54-a5d3-7c21a2f54dbd
+      width: 6
+      height: 80
+      sliceName: "\u041A\u0430\u0440\u0442\u0430: \u043E\u0442\u043A\u043B\u043E\u043D\
+        \u0435\u043D\u0438\u0435 \u043C\u0430\u0440\u0436\u0438 \u043E\u0442 \u043F\
+        \u043B\u0430\u043D\u0430, \u043F.\u043F."
+  CHART-map_new_competitors:
+    type: CHART
+    id: CHART-map_new_competitors
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-1
+    meta:
+      chartId: 1
+      uuid: c3b47032-b7df-402c-86cd-c9090d069e7b
+      width: 6
+      height: 80
+      sliceName: "\u041A\u0430\u0440\u0442\u0430: \u043D\u043E\u0432\u044B\u0435 \u043A\
+        \u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u044B"
+  ROW-2:
+    type: ROW
+    id: ROW-2
+    children:
+    - CHART-regions
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-regions:
+    type: CHART
+    id: CHART-regions
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-2
+    meta:
+      chartId: 14
+      uuid: 34b85ebd-8af0-4e9a-9b92-56227c23b3e0
+      width: 12
+      height: 60
+      sliceName: "\u0420\u0435\u0433\u0438\u043E\u043D\u044B \u043F\u0440\u0438\u0441\
+        \u0443\u0442\u0441\u0442\u0432\u0438\u044F (\u043A\u043B\u0438\u043A \u043F\
+        \u043E \u0440\u0435\u0433\u0438\u043E\u043D\u0443 \u0444\u0438\u043B\u044C\
+        \u0442\u0440\u0443\u0435\u0442 \u0434\u0430\u0448\u0431\u043E\u0440\u0434)"
+  ROW-3:
+    type: ROW
+    id: ROW-3
+    children:
+    - CHART-signals
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-signals:
+    type: CHART
+    id: CHART-signals
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-3
+    meta:
+      chartId: 10
+      uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
+      width: 12
+      height: 80
+      sliceName: "\u041B\u0435\u043D\u0442\u0430 \u0441\u0438\u0433\u043D\u0430\u043B\
+        \u043E\u0432"
+  ROW-4:
+    type: ROW
+    id: ROW-4
+    children:
+    - CHART-sources
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-sources:
+    type: CHART
+    id: CHART-sources
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-4
+    meta:
+      chartId: 7
+      uuid: 6646d67f-cdbc-4edb-bf05-f9391fea3b4f
+      width: 12
+      height: 50
+      sliceName: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u0434\u0430\
+        \u043D\u043D\u044B\u0445: \u0441\u0432\u0435\u0436\u0435\u0441\u0442\u044C\
+        \ \u0438 \u0434\u043E\u0441\u0442\u043E\u0432\u0435\u0440\u043D\u043E\u0441\
+        \u0442\u044C"
+metadata:
+  native_filter_configuration:
+  - id: NATIVE_FILTER-e875e996c0be
+    name: "\u0420\u0435\u0433\u0438\u043E\u043D"
+    filterType: filter_select
+    targets:
+    - column:
+        name: region
+      datasetUuid: 9eb235dd-bdd9-4b38-98ab-4ab4104e7aa6
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-660725f89f64
+    name: "\u0413\u0440\u0443\u043F\u043F\u0430 \u0442\u043E\u0432\u0430\u0440\u043E\
+      \u0432"
+    filterType: filter_select
+    targets:
+    - column:
+        name: product_group
+      datasetUuid: 5dd71ed1-c661-42db-8135-6a7e6795825b
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  cross_filters_enabled: true
+  refresh_frequency: 0
+  timed_refresh_immune_slices: []
+  expanded_slices: {}
+  color_scheme: ''
+  label_colors: {}
+  shared_label_colors: []
+  map_label_colors: {}
+  color_scheme_domain: []
+version: 1.0.0

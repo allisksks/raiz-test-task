@@ -1,0 +1,42 @@
+slice_name: "\u041A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442: \u0430\u0441\u0441\
+  \u043E\u0440\u0442\u0438\u043C\u0435\u043D\u0442 \u0438 \u0446\u0435\u043D\u044B"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters: []
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y'
+  all_columns:
+  - competitor
+  - competitor_product
+  - competitor_brand
+  - match_type
+  - own_product
+  - competitor_price
+  - own_price
+  - price_gap
+  - first_seen
+  - last_seen
+  - status
+  - is_new_competitor
+  order_by_cols:
+  - '["competitor", true]'
+  - '["competitor_product", true]'
+  column_config:
+    competitor_price:
+      d3NumberFormat: ',.0f'
+    own_price:
+      d3NumberFormat: ',.0f'
+    price_gap:
+      d3NumberFormat: .1%
+query_context: null
+cache_timeout: null
+uuid: cb22cac8-af35-4ae6-9670-9ea89da88bdb
+version: 1.0.0
+dataset_uuid: 813a4698-825b-4fd9-9d8b-9d8fa595570b

@@ -1,0 +1,320 @@
+{
+ "odata.metadata": "http://1c.example/trade/odata/standard.odata/$metadata#Catalog_Номенклатура",
+ "value": [
+  {
+   "Ref_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "DeletionMark": false,
+   "IsFolder": true,
+   "Parent_Key": "00000000-0000-0000-0000-000000000000",
+   "Code": "Г-01",
+   "Description": "Сухие смеси"
+  },
+  {
+   "Ref_Key": "8b1e8477-a8d0-5850-b8da-d9e5278f67ec",
+   "DeletionMark": false,
+   "IsFolder": true,
+   "Parent_Key": "00000000-0000-0000-0000-000000000000",
+   "Code": "Г-02",
+   "Description": "Клеи и затирки"
+  },
+  {
+   "Ref_Key": "a77b64e3-ca1f-5a59-8dc3-8311722d2c9e",
+   "DeletionMark": false,
+   "IsFolder": true,
+   "Parent_Key": "00000000-0000-0000-0000-000000000000",
+   "Code": "Г-03",
+   "Description": "Гидроизоляция"
+  },
+  {
+   "Ref_Key": "628a3b4e-3643-5f0a-9582-70f3fe507f8c",
+   "DeletionMark": false,
+   "IsFolder": true,
+   "Parent_Key": "00000000-0000-0000-0000-000000000000",
+   "Code": "Г-04",
+   "Description": "Грунтовки"
+  },
+  {
+   "Ref_Key": "3f296e27-7699-5d6f-9bf4-5d6325e6384c",
+   "DeletionMark": false,
+   "IsFolder": true,
+   "Parent_Key": "00000000-0000-0000-0000-000000000000",
+   "Code": "Г-05",
+   "Description": "Утеплители"
+  },
+  {
+   "Ref_Key": "0c0d35c5-5091-5db9-9af8-6d090db85991",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "Code": "PM-101",
+   "Description": "Штукатурка гипсовая ПрофМикс 30 кг",
+   "Артикул": "PM-101",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "b36ad3ec-a7fe-573b-b6e0-28e6fb0baa56",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "Code": "PM-102",
+   "Description": "Штукатурка цементная ПрофМикс 25 кг",
+   "Артикул": "PM-102",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "908fd242-b459-5a4b-8f09-5456b41fc41e",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "Code": "PM-103",
+   "Description": "Шпаклёвка финишная ПрофМикс 20 кг",
+   "Артикул": "PM-103",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "ac76e6b3-fb4c-59e0-af3a-14684318a750",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "Code": "PM-104",
+   "Description": "Наливной пол ПрофМикс 25 кг",
+   "Артикул": "PM-104",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "24186293-3456-5491-80f6-0c1009378958",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "Code": "PM-105",
+   "Description": "Ровнитель для пола ПрофМикс 25 кг",
+   "Артикул": "PM-105",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "35bcfe8f-6354-5307-91ee-eb6620e2c55e",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "bdd200a2-c5b6-5895-8147-6316348a21e9",
+   "Code": "PM-106",
+   "Description": "Кладочная смесь ПрофМикс 25 кг",
+   "Артикул": "PM-106",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "4bb7c0af-a081-5998-9c9b-7989031725ca",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "8b1e8477-a8d0-5850-b8da-d9e5278f67ec",
+   "Code": "PM-201",
+   "Description": "Клей плиточный стандарт ПрофМикс 25 кг",
+   "Артикул": "PM-201",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "211ef655-db08-5777-ac86-395ce10d3b92",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "8b1e8477-a8d0-5850-b8da-d9e5278f67ec",
+   "Code": "PM-202",
+   "Description": "Клей плиточный усиленный ПрофМикс 25 кг",
+   "Артикул": "PM-202",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "9b1157e0-20d0-5d17-9443-13078f140145",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "8b1e8477-a8d0-5850-b8da-d9e5278f67ec",
+   "Code": "PM-203",
+   "Description": "Клей для керамогранита ПрофМикс 25 кг",
+   "Артикул": "PM-203",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "2db43546-664c-503b-afe5-44a287afdb96",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "8b1e8477-a8d0-5850-b8da-d9e5278f67ec",
+   "Code": "PM-204",
+   "Description": "Клей эластичный ПрофМикс 25 кг",
+   "Артикул": "PM-204",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "56531fbc-d79b-5189-90b2-fa3f7c6a2a06",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "8b1e8477-a8d0-5850-b8da-d9e5278f67ec",
+   "Code": "PM-205",
+   "Description": "Затирка цементная ПрофМикс 2 кг",
+   "Артикул": "PM-205",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "шт"
+  },
+  {
+   "Ref_Key": "8db4452c-8659-5141-b69e-d4347d8bf0d7",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "a77b64e3-ca1f-5a59-8dc3-8311722d2c9e",
+   "Code": "GS-301",
+   "Description": "Гидроизоляция обмазочная ГидроСтоп 20 кг",
+   "Артикул": "GS-301",
+   "Бренд": "ГидроСтоп",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "016167a8-86b0-54cf-9ced-2964ebea8d05",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "a77b64e3-ca1f-5a59-8dc3-8311722d2c9e",
+   "Code": "GS-302",
+   "Description": "Гидроизоляция эластичная 2К ГидроСтоп 15 кг",
+   "Артикул": "GS-302",
+   "Бренд": "ГидроСтоп",
+   "ЕдиницаИзмерения": "компл"
+  },
+  {
+   "Ref_Key": "08c15804-efb1-5a60-8c55-b8dbd5a92849",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "a77b64e3-ca1f-5a59-8dc3-8311722d2c9e",
+   "Code": "GS-303",
+   "Description": "Мастика битумная ГидроСтоп 18 кг",
+   "Артикул": "GS-303",
+   "Бренд": "ГидроСтоп",
+   "ЕдиницаИзмерения": "ведро"
+  },
+  {
+   "Ref_Key": "dee931ac-f2e8-58e2-8659-70b0144e8966",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "a77b64e3-ca1f-5a59-8dc3-8311722d2c9e",
+   "Code": "GS-304",
+   "Description": "Лента гидроизоляционная ГидроСтоп 10 м",
+   "Артикул": "GS-304",
+   "Бренд": "ГидроСтоп",
+   "ЕдиницаИзмерения": "рул"
+  },
+  {
+   "Ref_Key": "8a479843-429d-5684-b0c8-6c4b50a2a731",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "a77b64e3-ca1f-5a59-8dc3-8311722d2c9e",
+   "Code": "GS-305",
+   "Description": "Гидроизоляция проникающая ГидроСтоп 25 кг",
+   "Артикул": "GS-305",
+   "Бренд": "ГидроСтоп",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "faaf987c-07b5-588c-ae76-be1bd31e2403",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "628a3b4e-3643-5f0a-9582-70f3fe507f8c",
+   "Code": "PM-401",
+   "Description": "Грунтовка глубокого проникновения ПрофМикс 10 л",
+   "Артикул": "PM-401",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "кан"
+  },
+  {
+   "Ref_Key": "111f809c-2b74-55ed-946c-ae0a265063f1",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "628a3b4e-3643-5f0a-9582-70f3fe507f8c",
+   "Code": "PM-402",
+   "Description": "Бетоконтакт ПрофМикс 15 кг",
+   "Артикул": "PM-402",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "ведро"
+  },
+  {
+   "Ref_Key": "875523f6-21d8-5fb4-abe3-ef5d66f33948",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "628a3b4e-3643-5f0a-9582-70f3fe507f8c",
+   "Code": "PM-403",
+   "Description": "Грунт универсальный ПрофМикс 5 л",
+   "Артикул": "PM-403",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "кан"
+  },
+  {
+   "Ref_Key": "642cb22d-c6cd-58a1-b271-b38e8b14ab6f",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "628a3b4e-3643-5f0a-9582-70f3fe507f8c",
+   "Code": "PM-404",
+   "Description": "Грунт-концентрат ПрофМикс 1 л",
+   "Артикул": "PM-404",
+   "Бренд": "ПрофМикс",
+   "ЕдиницаИзмерения": "шт"
+  },
+  {
+   "Ref_Key": "85ecbbcb-c8a5-5a44-82f3-b1f6d5a01495",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "3f296e27-7699-5d6f-9bf4-5d6325e6384c",
+   "Code": "TD-501",
+   "Description": "Минвата Тёплый Дом 50 мм (6 м²)",
+   "Артикул": "TD-501",
+   "Бренд": "Тёплый Дом",
+   "ЕдиницаИзмерения": "уп"
+  },
+  {
+   "Ref_Key": "911ac397-3cc7-5cd4-9eeb-aac8e9efc4f4",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "3f296e27-7699-5d6f-9bf4-5d6325e6384c",
+   "Code": "TD-502",
+   "Description": "Пенополистирол ПСБ-С 25 Тёплый Дом 50 мм (6 м²)",
+   "Артикул": "TD-502",
+   "Бренд": "Тёплый Дом",
+   "ЕдиницаИзмерения": "уп"
+  },
+  {
+   "Ref_Key": "61979d76-c0ac-50db-ac7c-ab23869aff80",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "3f296e27-7699-5d6f-9bf4-5d6325e6384c",
+   "Code": "TD-503",
+   "Description": "XPS Тёплый Дом 50 мм (2,8 м²)",
+   "Артикул": "TD-503",
+   "Бренд": "Тёплый Дом",
+   "ЕдиницаИзмерения": "уп"
+  },
+  {
+   "Ref_Key": "b263c864-c13a-5313-980c-07963e71592e",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "3f296e27-7699-5d6f-9bf4-5d6325e6384c",
+   "Code": "TD-504",
+   "Description": "Клей для утеплителя Тёплый Дом 25 кг",
+   "Артикул": "TD-504",
+   "Бренд": "Тёплый Дом",
+   "ЕдиницаИзмерения": "меш"
+  },
+  {
+   "Ref_Key": "8d86e837-bc95-5f5c-97b1-91462e9c0279",
+   "DeletionMark": false,
+   "IsFolder": false,
+   "Parent_Key": "3f296e27-7699-5d6f-9bf4-5d6325e6384c",
+   "Code": "TD-505",
+   "Description": "Дюбель для теплоизоляции Тёплый Дом (100 шт)",
+   "Артикул": "TD-505",
+   "Бренд": "Тёплый Дом",
+   "ЕдиницаИзмерения": "уп"
+  }
+ ]
+}

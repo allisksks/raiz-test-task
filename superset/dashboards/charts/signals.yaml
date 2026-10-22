@@ -1,0 +1,32 @@
+slice_name: "\u041B\u0435\u043D\u0442\u0430 \u0441\u0438\u0433\u043D\u0430\u043B\u043E\
+  \u0432"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y'
+  all_columns:
+  - event_date
+  - severity_name
+  - signal_name
+  - region
+  - title
+  order_by_cols:
+  - '["event_date", false]'
+query_context: null
+cache_timeout: null
+uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
+version: 1.0.0
+dataset_uuid: 5dd71ed1-c661-42db-8135-6a7e6795825b

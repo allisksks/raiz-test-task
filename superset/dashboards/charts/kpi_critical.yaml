@@ -1,0 +1,29 @@
+slice_name: "\u041A\u0440\u0438\u0442\u0438\u0447\u043D\u044B\u0435 \u0441\u0438\u0433\
+  \u043D\u0430\u043B\u044B"
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  viz_type: big_number_total
+  adhoc_filters:
+  - expressionType: SQL
+    sqlExpression: severity = 'critical'
+    clause: WHERE
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+  metric:
+    expressionType: SQL
+    sqlExpression: COUNT(*)
+    label: "\u041A\u0440\u0438\u0442\u0438\u0447\u043D\u044B\u0435 \u0441\u0438\u0433\
+      \u043D\u0430\u043B\u044B"
+  subheader: "\u0442\u0440\u0435\u0431\u0443\u044E\u0442 \u0440\u0435\u0430\u043A\u0446\
+    \u0438\u0438"
+query_context: null
+cache_timeout: null
+uuid: 9fde165e-be7e-4276-a480-3402c31372eb
+version: 1.0.0
+dataset_uuid: 5dd71ed1-c661-42db-8135-6a7e6795825b

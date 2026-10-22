@@ -1,0 +1,20 @@
+slice_name: "\u041D\u043E\u0432\u044B\u0435 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\
+  \u043D\u0442\u044B"
+description: null
+certified_by: null
+certification_details: null
+viz_type: big_number_total
+params:
+  viz_type: big_number_total
+  adhoc_filters: []
+  metric:
+    expressionType: SQL
+    sqlExpression: SUM(new_competitors)
+    label: "\u041D\u043E\u0432\u044B\u0435 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\
+      \u043D\u0442\u044B"
+  subheader: "\u0437\u0430 120 \u0434\u043D\u0435\u0439"
+query_context: null
+cache_timeout: null
+uuid: 3dc45c7a-fbe9-498e-8a9d-e476e9b68fc9
+version: 1.0.0
+dataset_uuid: 9eb235dd-bdd9-4b38-98ab-4ab4104e7aa6

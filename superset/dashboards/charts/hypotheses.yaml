@@ -1,0 +1,44 @@
+slice_name: "\u0413\u0438\u043F\u043E\u0442\u0435\u0437\u044B: \u0437\u0430 \u0441\
+  \u0447\u0451\u0442 \u0447\u0435\u0433\u043E \u043A\u043E\u043D\u043A\u0443\u0440\
+  \u0435\u043D\u0442 \u0434\u0435\u0448\u0435\u0432\u043B\u0435"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters:
+  - expressionType: SQL
+    sqlExpression: "rank <= 3 AND signal_name <> '\u041D\u043E\u0432\u044B\u0439 \u043A\
+      \u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442 \u0438 \u0438\u0437\u043C\u0435\
+      \u043D\u0435\u043D\u0438\u0435 \u043C\u0430\u0440\u0436\u0438'"
+    clause: WHERE
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y'
+  all_columns:
+  - region
+  - competitor
+  - signal_name
+  - rank
+  - title
+  - score
+  - rationale
+  order_by_cols:
+  - '["signal_id", true]'
+  - '["rank", true]'
+  column_config:
+    score:
+      d3NumberFormat: .2f
+query_context: null
+cache_timeout: null
+uuid: c7bafb4f-a11b-4488-b42e-b7019cbe46a2
+version: 1.0.0
+dataset_uuid: c2afe4ea-519a-4e6b-989e-1a578bcff0cd
