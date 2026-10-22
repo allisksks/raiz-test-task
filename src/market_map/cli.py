@@ -45,6 +45,15 @@ def detect_signals_cmd(args: argparse.Namespace) -> int:
     return 0
 
 
+def generate_hypotheses_cmd(args: argparse.Namespace) -> int:
+    """Пересчитывает гипотезы о причинах ценовых различий и ценовую архитектуру."""
+    from market_map.hypotheses import generate_hypotheses
+
+    for name, count in generate_hypotheses(get_engine()).items():
+        print(f"{name}: {count}")
+    return 0
+
+
 def generate_samples(args: argparse.Namespace) -> int:
     """Генерирует тестовые данные 1С и подготовленной базы."""
     from market_map.samples import generate
@@ -108,6 +117,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     commands.add_parser("detect-signals", help=detect_signals_cmd.__doc__).set_defaults(
         func=detect_signals_cmd
+    )
+    commands.add_parser("generate-hypotheses", help=generate_hypotheses_cmd.__doc__).set_defaults(
+        func=generate_hypotheses_cmd
     )
 
     gen = commands.add_parser("generate-samples", help=generate_samples.__doc__)
