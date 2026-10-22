@@ -36,6 +36,15 @@ def refresh_marts_cmd(args: argparse.Namespace) -> int:
     return 0
 
 
+def detect_signals_cmd(args: argparse.Namespace) -> int:
+    """Пересчитывает сигналы о рыночных изменениях."""
+    from market_map.signals import detect_signals
+
+    for signal_type, count in sorted(detect_signals(get_engine()).items()):
+        print(f"{signal_type}: {count}")
+    return 0
+
+
 def generate_samples(args: argparse.Namespace) -> int:
     """Генерирует тестовые данные 1С и подготовленной базы."""
     from market_map.samples import generate
@@ -96,6 +105,9 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser("migrate", help=migrate_cmd.__doc__).set_defaults(func=migrate_cmd)
     commands.add_parser("refresh-marts", help=refresh_marts_cmd.__doc__).set_defaults(
         func=refresh_marts_cmd
+    )
+    commands.add_parser("detect-signals", help=detect_signals_cmd.__doc__).set_defaults(
+        func=detect_signals_cmd
     )
 
     gen = commands.add_parser("generate-samples", help=generate_samples.__doc__)
