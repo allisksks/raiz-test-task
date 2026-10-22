@@ -12,8 +12,10 @@ def refresh_marts(engine: Engine) -> None:
 
 
 def refresh_derived(engine: Engine) -> None:
-    """После загрузки: пересчитать витрины, затем сигналы (они строятся по витринам)."""
+    """После загрузки: витрины → сигналы (строятся по витринам) → гипотезы (по сигналам)."""
+    from market_map.hypotheses import generate_hypotheses
     from market_map.signals import detect_signals
 
     refresh_marts(engine)
     detect_signals(engine)
+    generate_hypotheses(engine)
