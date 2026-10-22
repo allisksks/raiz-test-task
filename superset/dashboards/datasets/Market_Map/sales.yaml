@@ -123,6 +123,18 @@ columns:
   description: null
   python_date_format: null
   extra: null
+- column_name: product
+  verbose_name: "\u0422\u043E\u0432\u0430\u0440"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: client
   verbose_name: "\u041A\u043B\u0438\u0435\u043D\u0442"
   is_dttm: false
@@ -208,18 +220,6 @@ columns:
   python_date_format: null
   extra: null
 - column_name: region_code
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: TEXT
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: ''
-  description: null
-  python_date_format: null
-  extra: null
-- column_name: product
   verbose_name: null
   is_dttm: false
   is_active: true

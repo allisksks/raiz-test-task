@@ -8,7 +8,7 @@
 import json
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 
 from sqlalchemy import Connection, Engine, text
 
@@ -28,7 +28,7 @@ class Thresholds:
     critical_margin_deviation: float = 0.05
     # Изменение маржи клиента после входа конкурента для составного сигнала, п.п.
     composite_margin_change: float = 0.01
-    # Изменение оценочной доли рынка за месяц, п.п.
+    # Изменение оценочной доли рынка квартал к кварталу, п.п.
     market_share: float = 0.05
 
 
@@ -213,6 +213,38 @@ def detect_competitor_price_changes(conn: Connection, t: Thresholds) -> list[Sig
     return signals
 
 
+def detect_assortment_exits(conn: Connection, t: Thresholds) -> list[Signal]:
+    """Позиция пропала из ассортимента конкурента: три недели без наблюдений, хотя
+    конкурент в регионе по-прежнему работает (marts.competitor_assortment)."""
+    rows = _rows(
+        conn,
+        """
+        select ca.*, p.group_id
+        from marts.competitor_assortment ca
+        join core.product p on p.id = ca.own_product_id
+        where ca.status = 'пропал из ассортимента'
+          and ca.region_code in (select region_code from marts.presence where kind = 'client')
+        order by ca.last_seen
+        """,
+    )
+    return [
+        Signal(
+            "assortment_exit",
+            "info",
+            r["last_seen"] + timedelta(days=7),
+            f"{r['competitor']} убрал из ассортимента в регионе {r['region']} "
+            f"«{r['competitor_product']}» ({r['match_type']} для «{r['own_product']}»): "
+            f"последнее наблюдение {r['last_seen']:%d.%m.%Y}",
+            region_code=r["region_code"],
+            competitor_id=r["competitor_id"],
+            product_group_id=r["group_id"],
+            product_id=r["own_product_id"],
+            details={"brand": r["competitor_brand"], "last_seen": r["last_seen"].isoformat()},
+        )
+        for r in rows
+    ]
+
+
 def detect_assortment_changes(conn: Connection, t: Thresholds) -> list[Signal]:
     """Новые товары у конкурентов, которые уже работали в регионе: аналоги — товары-заменители."""
     rows = _rows(
@@ -383,36 +415,57 @@ def detect_margin_deviations(conn: Connection, t: Thresholds) -> list[Signal]:
 
 
 def detect_market_share_changes(conn: Connection, t: Thresholds) -> list[Signal]:
+    """Изменение оценочной доли рынка квартал к кварталу: средняя доля за три месяца против
+    трёх предыдущих (метод из ТЗ — по статистике прошлых периодов). Месяц к месяцу доля
+    в небольшом регионе колеблется на 5–10 п.п. просто из-за разброса продаж, квартальное
+    сравнение это сглаживает. Сигнал — в первый месяц, когда изменение превысило порог."""
     rows = _rows(
         conn,
         """
-        select s.month, s.region_code, s.region, s.product_group, g.id as group_id, s.share,
-               lag(s.share) over (partition by s.region_code, s.product_group order by s.month)
-                   as previous_share
-        from marts.market_share s
-        join core.product_group g on g.name = s.product_group
-        where s.player_kind = 'own'
+        with own as (
+            select s.month, s.region_code, s.region, s.product_group, g.id as group_id, s.share
+            from marts.market_share s
+            join core.product_group g on g.name = s.product_group
+            where s.player_kind = 'own' and s.method_code = 'history'
+        )
+        select *,
+               count(*) over w as months,
+               avg(share) over (w rows between 2 preceding and current row) as quarter,
+               avg(share) over (w rows between 5 preceding and 3 preceding) as previous_quarter
+        from own
+        window w as (partition by region_code, product_group order by month)
+        order by region_code, product_group, month
         """,
     )
-    signals = []
+    signals, crossed_before = [], set()
     for r in rows:
-        if r["previous_share"] is None:
+        if r["months"] < 6:
             continue
-        change = float(r["share"] - r["previous_share"])
+        key = (r["region_code"], r["product_group"])
+        change = float(r["quarter"] - r["previous_quarter"])
         if abs(change) < t.market_share:
+            crossed_before.discard(key)
             continue
+        if key in crossed_before:
+            continue
+        crossed_before.add(key)
         signals.append(
             Signal(
                 "market_share_change",
                 "warning" if change < 0 else "info",
                 r["month"],
                 f"Оценочная доля рынка по «{r['product_group']}» в регионе {r['region']} "
-                f"{'снизилась' if change < 0 else 'выросла'} на {_pp(change)}: "
-                f"{r['previous_share'] * 100:.0f}% → {r['share'] * 100:.0f}%",
+                f"{'снизилась' if change < 0 else 'выросла'} на {_pp(change)} за квартал: "
+                f"{r['previous_quarter'] * 100:.0f}% → {r['quarter'] * 100:.0f}% "
+                "(среднее за три месяца)",
                 region_code=r["region_code"],
                 product_group_id=r["group_id"],
                 value=round(change, 4),
-                details={"share": float(r["share"]), "previous_share": float(r["previous_share"])},
+                details={
+                    "quarter": round(float(r["quarter"]), 4),
+                    "previous_quarter": round(float(r["previous_quarter"]), 4),
+                    "method": "по статистике прошлых периодов",
+                },
                 provenance="estimate",
             )
         )
@@ -525,6 +578,7 @@ DETECTORS = (
     detect_competitor_exits,
     detect_competitor_price_changes,
     detect_assortment_changes,
+    detect_assortment_exits,
     detect_price_position_changes,
     detect_margin_deviations,
     detect_market_share_changes,
@@ -532,7 +586,7 @@ DETECTORS = (
 
 
 def detect_signals(engine: Engine, thresholds: Thresholds | None = None) -> dict[str, int]:
-    """Пересчитывает все сигналы; возвращает их число по типам."""
+    """Пересчитывает все сигналы (и гипотезы по ним); возвращает число сигналов по типам."""
     t = thresholds or Thresholds()
     with engine.begin() as conn:
         signals = [s for detector in DETECTORS for s in detector(conn, t)]
@@ -551,6 +605,12 @@ def detect_signals(engine: Engine, thresholds: Thresholds | None = None) -> dict
                     for s in signals
                 ],
             )
+    # Гипотезы строятся по сигналам и удаляются вместе с ними (on delete cascade) —
+    # пересчитываем их сразу, иначе отдельный запуск детектора оставит систему без гипотез
+    from market_map.hypotheses import generate_hypotheses
+
+    generate_hypotheses(engine)
+
     counts: dict[str, int] = defaultdict(int)
     for s in signals:
         counts[s.signal_type] += 1

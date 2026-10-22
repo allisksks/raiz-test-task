@@ -23,6 +23,11 @@ class Settings(BaseSettings):
     # Подготовленная база конкурентов: адрес SQLAlchemy
     prepared_db_url: str = "sqlite:///data/samples/prepared/prepared.sqlite"
 
+    # Планировщик: ежедневный запуск конвейера обновления
+    schedule_time: str = "03:00"
+    schedule_tz: str = "Europe/Moscow"
+    schedule_run_on_start: bool = True
+
     @property
     def database_url(self) -> str:
         return (

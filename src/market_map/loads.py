@@ -1,5 +1,6 @@
 """Журнал загрузок: запуск, статистика, отклонённые записи (staging.load_run/load_reject)."""
 
+import functools
 import json
 from dataclasses import dataclass, field
 
@@ -66,3 +67,23 @@ def source_ids(conn: Connection, table: str, source_id: int) -> dict[str, int]:
 def product_group_ids(conn: Connection, by: str = "source_key") -> dict[str, int]:
     rows = conn.execute(text(f"select {by}, id from core.product_group"))
     return {key: id_ for key, id_ in rows}
+
+
+# Ключ advisory-lock PostgreSQL: загрузки не идут параллельно (расписание + ручной запуск)
+LOAD_LOCK_KEY = 0x4D4D4150  # «MMAP»
+
+
+def exclusive_load(load):
+    """Декоратор загрузчика: держит advisory-lock на время загрузки. Второй запуск ждёт
+    окончания первого, а не пишет в те же таблицы одновременно."""
+
+    @functools.wraps(load)
+    def wrapper(engine: Engine, *args, **kwargs):
+        with engine.connect() as lock_conn:
+            lock_conn.execute(text("select pg_advisory_lock(:k)"), {"k": LOAD_LOCK_KEY})
+            try:
+                return load(engine, *args, **kwargs)
+            finally:
+                lock_conn.execute(text("select pg_advisory_unlock(:k)"), {"k": LOAD_LOCK_KEY})
+
+    return wrapper

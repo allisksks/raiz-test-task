@@ -94,10 +94,10 @@ def test_s5_exited_competitor_inactive(db):
 def test_market_share_is_normalized_and_estimated(db):
     sums = _all(
         db,
-        "select month, region_code, product_group, sum(share) from marts.market_share "
-        "group by 1, 2, 3",
+        "select method_code, month, region_code, product_group, sum(share) "
+        "from marts.market_share group by 1, 2, 3, 4",
     )
-    assert sums
+    assert {method for method, *_ in sums} == {"assortment", "history"}
     assert all(abs(float(total) - 1) < 0.001 for *_, total in sums)
     assert _all(db, "select distinct provenance::text from marts.market_share") == [("estimate",)]
 
@@ -107,7 +107,8 @@ def test_new_competitor_takes_share_only_after_entry(db):
         _all(
             db,
             "select to_char(month, 'YYYY-MM'), share from marts.market_share "
-            "where player = 'ООО «СибСтройОпт»' and product_group = 'Сухие смеси'",
+            "where player = 'ООО «СибСтройОпт»' and product_group = 'Сухие смеси' "
+            "and method_code = 'assortment'",
         )
     )
     assert min(shares) == "2026-07"
@@ -116,10 +117,67 @@ def test_new_competitor_takes_share_only_after_entry(db):
             db,
             "select to_char(month, 'YYYY-MM'), share from marts.market_share "
             "where player_kind = 'own' and region_code = 'RU-NVS' "
-            "and product_group = 'Сухие смеси'",
+            "and product_group = 'Сухие смеси' and method_code = 'assortment'",
         )
     )
     assert own["2026-07"] < own["2026-06"]
+
+
+def test_history_share_follows_own_sales(db):
+    """По статистике прошлых периодов доля падает постепенно, вслед за нашими продажами."""
+    own = dict(
+        _all(
+            db,
+            "select to_char(month, 'YYYY-MM'), share from marts.market_share "
+            "where player_kind = 'own' and region_code = 'RU-NVS' "
+            "and product_group = 'Сухие смеси' and method_code = 'history'",
+        )
+    )
+    base = own["2026-04"]
+    assert abs(float(own["2026-06"]) - float(base)) < 0.02  # до входа конкурента — стабильно
+    assert own["2026-09"] < own["2026-08"] < own["2026-07"] < own["2026-06"]
+    assert float(base) - float(own["2026-09"]) > 0.1
+
+
+def test_channel_share_sums_to_one(db):
+    sums = _all(
+        db,
+        "select month, region_code, product_group, sum(share) from marts.channel_share "
+        "group by 1, 2, 3",
+    )
+    assert sums and all(abs(float(total) - 1) < 0.001 for *_, total in sums)
+
+
+def test_key_competitor_of_clients_is_new_cheaper_entrant(db):
+    top = dict(
+        _all(
+            db,
+            "select client, competitor from marts.client_competitors "
+            "where region_code = 'RU-NVS' and rank = 1",
+        )
+    )
+    assert set(top.values()) == {"ООО «СибСтройОпт»"}
+    assert len(top) == 4
+    # дороже клиента — угрозы нет
+    assert (
+        _one(
+            db, "select count(*) from marts.client_competitors where price_gap >= 0 and threat > 0"
+        )
+        == 0
+    )
+
+
+def test_competitor_assortment_statuses(db):
+    statuses = dict(_all(db, "select status, count(*) from marts.competitor_assortment group by 1"))
+    assert set(statuses) == {"в продаже", "конкурент ушёл из региона"}
+    assert (
+        _one(
+            db,
+            "select count(distinct competitor) from marts.competitor_assortment "
+            "where status = 'конкурент ушёл из региона'",
+        )
+        == 1
+    )
 
 
 def test_source_freshness(db):

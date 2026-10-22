@@ -25,6 +25,9 @@ position:
     - ROW-3
     - ROW-4
     - ROW-5
+    - ROW-6
+    - ROW-7
+    - ROW-8
     parents:
     - ROOT_ID
   HEADER_ID:
@@ -97,7 +100,7 @@ position:
     - GRID_ID
     - ROW-1
     meta:
-      chartId: 6
+      chartId: 10
       uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
       width: 12
       height: 60
@@ -122,7 +125,7 @@ position:
     - GRID_ID
     - ROW-2
     meta:
-      chartId: 7
+      chartId: 11
       uuid: c7bafb4f-a11b-4488-b42e-b7019cbe46a2
       width: 12
       height: 55
@@ -148,7 +151,7 @@ position:
     - GRID_ID
     - ROW-3
     meta:
-      chartId: 11
+      chartId: 12
       uuid: 828bae13-7111-43d7-8b0f-8d529a37c6d7
       width: 12
       height: 70
@@ -158,6 +161,58 @@ position:
   ROW-4:
     type: ROW
     id: ROW-4
+    children:
+    - CHART-key_competitors
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-key_competitors:
+    type: CHART
+    id: CHART-key_competitors
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-4
+    meta:
+      chartId: 17
+      uuid: 40970cdf-fb67-4781-a59e-20b2dac3fa7e
+      width: 12
+      height: 60
+      sliceName: "\u041A\u043B\u044E\u0447\u0435\u0432\u044B\u0435 \u043A\u043E\u043D\
+        \u043A\u0443\u0440\u0435\u043D\u0442\u044B \u043A\u043B\u0438\u0435\u043D\u0442\
+        \u0430"
+  ROW-5:
+    type: ROW
+    id: ROW-5
+    children:
+    - CHART-competitor_assortment
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-competitor_assortment:
+    type: CHART
+    id: CHART-competitor_assortment
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-5
+    meta:
+      chartId: 18
+      uuid: cb22cac8-af35-4ae6-9670-9ea89da88bdb
+      width: 12
+      height: 60
+      sliceName: "\u041A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442: \u0430\u0441\
+        \u0441\u043E\u0440\u0442\u0438\u043C\u0435\u043D\u0442 \u0438 \u0446\u0435\
+        \u043D\u044B"
+  ROW-6:
+    type: ROW
+    id: ROW-6
     children:
     - CHART-price_gap
     - CHART-market_share
@@ -173,9 +228,9 @@ position:
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-4
+    - ROW-6
     meta:
-      chartId: 12
+      chartId: 8
       uuid: ad9de393-3011-4a84-9b64-f1fb8d6308ad
       width: 6
       height: 60
@@ -189,20 +244,22 @@ position:
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-4
+    - ROW-6
     meta:
-      chartId: 2
-      uuid: 34cef677-f124-4472-ba55-47cffeb4fa32
+      chartId: 15
+      uuid: 4f5760b1-10f8-4ee3-9328-51c47d5a9f29
       width: 6
       height: 60
-      sliceName: "\u0414\u043E\u043B\u0438 \u0440\u044B\u043D\u043A\u0430 (\u043E\u0446\
-        \u0435\u043D\u043A\u0430), %"
-  ROW-5:
+      sliceName: "\u0414\u043E\u043B\u0438 \u0440\u044B\u043D\u043A\u0430, % (\u043E\
+        \u0446\u0435\u043D\u043A\u0430 \u043F\u043E \u0441\u0442\u0430\u0442\u0438\
+        \u0441\u0442\u0438\u043A\u0435 \u043F\u0440\u043E\u0448\u043B\u044B\u0445\
+        \ \u043F\u0435\u0440\u0438\u043E\u0434\u043E\u0432)"
+  ROW-7:
     type: ROW
-    id: ROW-5
+    id: ROW-7
     children:
     - CHART-margin_plan_fact
-    - CHART-sales_by_client
+    - CHART-channel_share
     parents:
     - ROOT_ID
     - GRID_ID
@@ -215,14 +272,39 @@ position:
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-5
+    - ROW-7
     meta:
-      chartId: 9
+      chartId: 13
       uuid: 7346d9a9-ad61-42ba-b8a1-a5794ddeba5c
       width: 6
       height: 60
       sliceName: "\u041C\u0430\u0440\u0436\u0430: \u043F\u043B\u0430\u043D \u0438\
         \ \u0444\u0430\u043A\u0442, %"
+  CHART-channel_share:
+    type: CHART
+    id: CHART-channel_share
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-7
+    meta:
+      chartId: 19
+      uuid: 0fa661cc-9c1a-4726-b984-a1fe55592dc9
+      width: 6
+      height: 60
+      sliceName: "\u041F\u0440\u043E\u0434\u0430\u0436\u0438 \u043F\u043E \u0442\u0438\
+        \u043F\u0443 \u043A\u043B\u0438\u0435\u043D\u0442\u0430, \u20BD"
+  ROW-8:
+    type: ROW
+    id: ROW-8
+    children:
+    - CHART-sales_by_client
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
   CHART-sales_by_client:
     type: CHART
     id: CHART-sales_by_client
@@ -230,14 +312,16 @@ position:
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-5
+    - ROW-8
     meta:
-      chartId: 10
-      uuid: 9974ac49-1a58-4755-aa91-8ca4ba761933
-      width: 6
-      height: 60
-      sliceName: "\u041A\u043B\u0438\u0435\u043D\u0442\u044B: \u0432\u044B\u0440\u0443\
-        \u0447\u043A\u0430 \u0438 \u043C\u0430\u0440\u0436\u0430"
+      chartId: 16
+      uuid: 23562915-a12c-4bf8-965b-653d9f74a6d5
+      width: 12
+      height: 70
+      sliceName: "\u041A\u043B\u0438\u0435\u043D\u0442\u044B \u0438 \u043D\u043E\u043C\
+        \u0435\u043D\u043A\u043B\u0430\u0442\u0443\u0440\u0430: \u0432\u044B\u0440\
+        \u0443\u0447\u043A\u0430, \u043C\u0430\u0440\u0436\u0430, \u0446\u0435\u043D\
+        \u0430"
 metadata:
   native_filter_configuration:
   - id: NATIVE_FILTER-d7ecd4339666
@@ -324,10 +408,13 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 6
-      - 7
-      - 11
       - 10
+      - 11
+      - 12
+      - 16
+      - 17
+      - 18
+      - 19
     type: NATIVE_FILTER
     description: ''
   - id: NATIVE_FILTER-897859f6fe33
@@ -346,6 +433,112 @@ metadata:
       defaultToFirstItem: false
       searchAllOptions: false
       inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-29f95ad24b02
+    name: "\u041A\u043B\u0438\u0435\u043D\u0442"
+    filterType: filter_select
+    targets:
+    - column:
+        name: client
+      datasetUuid: ae19062d-e5f8-4396-b9a2-d8368348889a
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-4313552c3bc0
+    name: "\u0422\u043E\u0432\u0430\u0440"
+    filterType: filter_select
+    targets:
+    - column:
+        name: product
+      datasetUuid: ae19062d-e5f8-4396-b9a2-d8368348889a
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-ca72b12d59b4
+    name: "\u041F\u0435\u0440\u0438\u043E\u0434"
+    filterType: filter_time
+    targets:
+    - {}
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-62ac7c2a2e73
+    name: "\u041D\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\
+      \u043D\u0442"
+    filterType: filter_select
+    targets:
+    - column:
+        name: is_new_competitor
+      datasetUuid: 813a4698-825b-4fd9-9d8b-9d8fa595570b
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-41390dbf1abd
+    name: "\u0426\u0435\u043D\u0430 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\
+      \u0442\u0430, \u20BD"
+    filterType: filter_range
+    targets:
+    - column:
+        name: competitor_price
+      datasetUuid: 813a4698-825b-4fd9-9d8b-9d8fa595570b
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      enableEmptyFilter: false
     cascadeParentIds: []
     scope:
       rootPath:

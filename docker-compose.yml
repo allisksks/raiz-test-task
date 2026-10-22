@@ -33,6 +33,7 @@ services:
 
   # Проверка хранилища; позже здесь же — ETL, сигналы и гипотезы
   app:
+    image: market-map-app
     build: .
     profiles: ["tools"]  # не стартует с `up`, запускается через `docker compose run`
     environment:
@@ -41,6 +42,28 @@ services:
       ONEC_USER: ${ONEC_USER:-}
       ONEC_PASSWORD: ${ONEC_PASSWORD:-}
       PREPARED_DB_URL: ${PREPARED_DB_URL:-sqlite:///data/samples/prepared/prepared.sqlite}
+    volumes:
+      - ./data:/app/data:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Ежедневное обновление: миграции → 1С → подготовленная база → витрины, сигналы,
+  # гипотезы. При старте стенда сразу загружает данные (SCHEDULE_RUN_ON_START).
+  scheduler:
+    image: market-map-app
+    build: .
+    command: ["schedule"]
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+      ONEC_ODATA_URL: ${ONEC_ODATA_URL:-}
+      ONEC_USER: ${ONEC_USER:-}
+      ONEC_PASSWORD: ${ONEC_PASSWORD:-}
+      PREPARED_DB_URL: ${PREPARED_DB_URL:-sqlite:///data/samples/prepared/prepared.sqlite}
+      SCHEDULE_TIME: ${SCHEDULE_TIME:-03:00}
+      SCHEDULE_TZ: ${SCHEDULE_TZ:-Europe/Moscow}
+      SCHEDULE_RUN_ON_START: ${SCHEDULE_RUN_ON_START:-true}
     volumes:
       - ./data:/app/data:ro
     depends_on:

@@ -1,0 +1,264 @@
+table_name: competitor_assortment
+main_dttm_col: first_seen
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+catalog: market_map
+schema: marts
+sql: null
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+always_filter_main_dttm: false
+uuid: 813a4698-825b-4fd9-9d8b-9d8fa595570b
+metrics:
+- metric_name: count
+  verbose_name: COUNT(*)
+  metric_type: count
+  expression: COUNT(*)
+  description: null
+  d3format: null
+  currency: null
+  extra: null
+  warning_text: null
+columns:
+- column_name: competitor_price
+  verbose_name: "\u0426\u0435\u043D\u0430 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\
+    \u043D\u0442\u0430, \u20BD"
+  is_dttm: false
+  is_active: true
+  type: NUMERIC(12, 2)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: own_price
+  verbose_name: "\u041D\u0430\u0448\u0430 \u0446\u0435\u043D\u0430, \u20BD"
+  is_dttm: false
+  is_active: true
+  type: NUMERIC
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: last_seen
+  verbose_name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0435 \u043D\u0430\
+    \u0431\u043B\u044E\u0434\u0435\u043D\u0438\u0435"
+  is_dttm: true
+  is_active: true
+  type: DATE
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: price_gap
+  verbose_name: "\u0420\u0430\u0437\u0440\u044B\u0432 \u0446\u0435\u043D\u044B"
+  is_dttm: false
+  is_active: true
+  type: NUMERIC
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: is_new_competitor
+  verbose_name: "\u041D\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\u043A\u0443\u0440\
+    \u0435\u043D\u0442"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: competitor_channel
+  verbose_name: "\u041A\u0430\u043D\u0430\u043B \u043A\u043E\u043D\u043A\u0443\u0440\
+    \u0435\u043D\u0442\u0430"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: competitor_product
+  verbose_name: "\u0422\u043E\u0432\u0430\u0440 \u043A\u043E\u043D\u043A\u0443\u0440\
+    \u0435\u043D\u0442\u0430"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: product_group
+  verbose_name: "\u0413\u0440\u0443\u043F\u043F\u0430 \u0442\u043E\u0432\u0430\u0440\
+    \u043E\u0432"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: own_product
+  verbose_name: "\u041D\u0430\u0448 \u0442\u043E\u0432\u0430\u0440"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: first_seen
+  verbose_name: "\u041F\u043E\u044F\u0432\u0438\u043B\u0441\u044F"
+  is_dttm: true
+  is_active: true
+  type: DATE
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: competitor_brand
+  verbose_name: "\u0411\u0440\u0435\u043D\u0434"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: match_type
+  verbose_name: "\u0421\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0435"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: status
+  verbose_name: "\u0421\u0442\u0430\u0442\u0443\u0441"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: competitor
+  verbose_name: "\u041A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: region
+  verbose_name: "\u0420\u0435\u0433\u0438\u043E\u043D"
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: own_product_id
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BIGINT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: competitor_id
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BIGINT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: map_code
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: region_code
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: TEXT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: ''
+  description: null
+  python_date_format: null
+  extra: null
+version: 1.0.0
+database_uuid: 2d53bf4c-32b6-49f0-929e-65929f80bcbc

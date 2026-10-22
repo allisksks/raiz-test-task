@@ -11,6 +11,11 @@ params:
   - expressionType: SQL
     sqlExpression: comparable
     clause: WHERE
+  - expressionType: SIMPLE
+    subject: observed_at
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
   x_axis: observed_at
   time_grain_sqla: P1W
   metrics:

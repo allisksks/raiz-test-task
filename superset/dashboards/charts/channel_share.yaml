@@ -1,0 +1,31 @@
+slice_name: "\u041F\u0440\u043E\u0434\u0430\u0436\u0438 \u043F\u043E \u0442\u0438\u043F\
+  \u0443 \u043A\u043B\u0438\u0435\u043D\u0442\u0430, \u20BD"
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_bar
+params:
+  viz_type: echarts_timeseries_bar
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: month
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+  x_axis: month
+  time_grain_sqla: P1M
+  metrics:
+  - expressionType: SQL
+    sqlExpression: SUM(revenue)
+    label: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430, \u20BD"
+  groupby:
+  - channel
+  stack: Stack
+  row_limit: 10000
+  show_legend: true
+  y_axis_format: ~s
+query_context: null
+cache_timeout: null
+uuid: 0fa661cc-9c1a-4726-b984-a1fe55592dc9
+version: 1.0.0
+dataset_uuid: 615bded1-01e4-4d02-a7fd-1d8b05b84b4e
