@@ -6,7 +6,12 @@ certification_details: null
 viz_type: table
 params:
   viz_type: table
-  adhoc_filters: []
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: month
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
   query_mode: aggregate
   groupby:
   - region

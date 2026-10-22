@@ -6,7 +6,12 @@ certification_details: null
 viz_type: table
 params:
   viz_type: table
-  adhoc_filters: []
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
   query_mode: raw
   row_limit: 1000
   server_pagination: false

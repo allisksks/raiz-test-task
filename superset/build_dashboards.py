@@ -72,6 +72,14 @@ TABLE = {
 PERCENT = {"d3NumberFormat": ".1%"}
 RUBLES = {"d3NumberFormat": ",.0f"}
 
+# Фильтр по периоду: действует на временную колонку каждого датасета (TIME_COLUMNS)
+PERIOD = "__time_range"
+TIME_COLUMNS = {
+    "signals": "event_date", "hypotheses": "event_date", "price_breakdown": "event_date",
+    "price_comparison": "observed_at", "market_share": "month", "margin_plan_fact": "month",
+    "sales": "month",
+}  # fmt: skip
+
 # Подписи колонок в таблицах и фильтрах
 VERBOSE = {
     "region": "Регион", "clients": "Клиенты", "competitors": "Конкуренты",
@@ -347,6 +355,9 @@ DASHBOARDS = {
             ("Группа товаров", "product_group", "signals", "Сухие смеси",
              ("signals", "hypotheses", "price_breakdown", "sales_by_client")),
             ("Канал", "channel", "sales", None, ()),
+            ("Клиент", "client", "sales", None, ()),
+            ("Товар", "product", "sales", None, ()),
+            ("Период", PERIOD, None, None, ()),
         ],
     ),
 }  # fmt: skip
@@ -383,10 +394,29 @@ def set_verbose_names(api: Superset, datasets: dict[str, int]) -> None:
         api.request("PUT", f"/api/v1/dataset/{dataset_id}", json={"columns": payload})
 
 
+def set_time_columns(api: Superset, datasets: dict[str, int]) -> None:
+    """Основная временная колонка датасета — к ней применяется фильтр «Период»."""
+    for table, column in TIME_COLUMNS.items():
+        api.request("PUT", f"/api/v1/dataset/{datasets[table]}", json={"main_dttm_col": column})
+
+
 def ensure_charts(api: Superset, datasets: dict[str, int]) -> dict[str, int]:
     ids = {}
     for key, chart in CHARTS.items():
         params = {"viz_type": chart["viz_type"], "adhoc_filters": [], **chart["params"]}
+        time_column = TIME_COLUMNS.get(chart["dataset"])
+        if time_column:
+            # Без такого фильтра график игнорирует «Период» на дашборде (Superset 4.1)
+            params["adhoc_filters"] = [
+                *params["adhoc_filters"],
+                {
+                    "expressionType": "SIMPLE",
+                    "subject": time_column,
+                    "operator": "TEMPORAL_RANGE",
+                    "comparator": "No filter",
+                    "clause": "WHERE",
+                },
+            ]
         payload = {
             "slice_name": chart["name"],
             "viz_type": chart["viz_type"],
@@ -458,6 +488,22 @@ def native_filters(filters: list, datasets: dict, charts: dict, slug: str) -> li
     result = []
     for name, column, dataset, default, excluded in filters:
         mask = {"filterState": {}, "extraFormData": {}}
+        if column == PERIOD:
+            result.append(
+                {
+                    "id": f"NATIVE_FILTER-{uuid.uuid5(uuid.NAMESPACE_URL, slug + column).hex[:12]}",
+                    "name": name,
+                    "filterType": "filter_time",
+                    "targets": [{}],
+                    "defaultDataMask": mask,
+                    "controlValues": {},
+                    "cascadeParentIds": [],
+                    "scope": {"rootPath": ["ROOT_ID"], "excluded": [charts[k] for k in excluded]},
+                    "type": "NATIVE_FILTER",
+                    "description": "",
+                }
+            )
+            continue
         if default is not None:
             mask = {
                 "filterState": {"value": [default]},
@@ -560,6 +606,7 @@ def main() -> None:
         raise SystemExit(f"Нет подключения «{DATABASE}» — сначала поднимите стенд")
     datasets = ensure_datasets(api, database_id)
     set_verbose_names(api, datasets)
+    set_time_columns(api, datasets)
     charts = ensure_charts(api, datasets)
     dashboards = ensure_dashboards(api, datasets, charts)
     print(f"Датасетов: {len(datasets)}, графиков: {len(charts)}, дашбордов: {len(dashboards)}")

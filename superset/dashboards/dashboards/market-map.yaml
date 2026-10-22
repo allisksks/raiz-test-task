@@ -83,7 +83,7 @@ position:
     - GRID_ID
     - ROW-0
     meta:
-      chartId: 3
+      chartId: 9
       uuid: 9fde165e-be7e-4276-a480-3402c31372eb
       width: 3
       height: 30
@@ -98,7 +98,7 @@ position:
     - GRID_ID
     - ROW-0
     meta:
-      chartId: 4
+      chartId: 6
       uuid: 3dc45c7a-fbe9-498e-8a9d-e476e9b68fc9
       width: 3
       height: 30
@@ -124,7 +124,7 @@ position:
     - GRID_ID
     - ROW-1
     meta:
-      chartId: 1
+      chartId: 2
       uuid: b7bdcdf9-36d1-4b54-a5d3-7c21a2f54dbd
       width: 6
       height: 80
@@ -140,7 +140,7 @@ position:
     - GRID_ID
     - ROW-1
     meta:
-      chartId: 8
+      chartId: 1
       uuid: c3b47032-b7df-402c-86cd-c9090d069e7b
       width: 6
       height: 80
@@ -165,7 +165,7 @@ position:
     - GRID_ID
     - ROW-2
     meta:
-      chartId: 13
+      chartId: 5
       uuid: a65b783c-a471-42be-afb4-dceafae293ca
       width: 12
       height: 60
@@ -190,7 +190,7 @@ position:
     - GRID_ID
     - ROW-3
     meta:
-      chartId: 6
+      chartId: 10
       uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
       width: 12
       height: 80
@@ -215,7 +215,7 @@ position:
     - GRID_ID
     - ROW-4
     meta:
-      chartId: 5
+      chartId: 7
       uuid: 6646d67f-cdbc-4edb-bf05-f9391fea3b4f
       width: 12
       height: 50

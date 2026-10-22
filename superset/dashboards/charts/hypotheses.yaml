@@ -13,6 +13,11 @@ params:
       \u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442 \u0438 \u0438\u0437\u043C\u0435\
       \u043D\u0435\u043D\u0438\u0435 \u043C\u0430\u0440\u0436\u0438'"
     clause: WHERE
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
   query_mode: raw
   row_limit: 1000
   server_pagination: false

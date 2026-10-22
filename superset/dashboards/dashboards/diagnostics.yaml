@@ -97,7 +97,7 @@ position:
     - GRID_ID
     - ROW-1
     meta:
-      chartId: 6
+      chartId: 10
       uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
       width: 12
       height: 60
@@ -122,7 +122,7 @@ position:
     - GRID_ID
     - ROW-2
     meta:
-      chartId: 7
+      chartId: 11
       uuid: c7bafb4f-a11b-4488-b42e-b7019cbe46a2
       width: 12
       height: 55
@@ -148,7 +148,7 @@ position:
     - GRID_ID
     - ROW-3
     meta:
-      chartId: 11
+      chartId: 12
       uuid: 828bae13-7111-43d7-8b0f-8d529a37c6d7
       width: 12
       height: 70
@@ -175,7 +175,7 @@ position:
     - GRID_ID
     - ROW-4
     meta:
-      chartId: 12
+      chartId: 8
       uuid: ad9de393-3011-4a84-9b64-f1fb8d6308ad
       width: 6
       height: 60
@@ -191,7 +191,7 @@ position:
     - GRID_ID
     - ROW-4
     meta:
-      chartId: 2
+      chartId: 3
       uuid: 34cef677-f124-4472-ba55-47cffeb4fa32
       width: 6
       height: 60
@@ -217,7 +217,7 @@ position:
     - GRID_ID
     - ROW-5
     meta:
-      chartId: 9
+      chartId: 13
       uuid: 7346d9a9-ad61-42ba-b8a1-a5794ddeba5c
       width: 6
       height: 60
@@ -232,7 +232,7 @@ position:
     - GRID_ID
     - ROW-5
     meta:
-      chartId: 10
+      chartId: 4
       uuid: 9974ac49-1a58-4755-aa91-8ca4ba761933
       width: 6
       height: 60
@@ -324,10 +324,10 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 6
-      - 7
-      - 11
       - 10
+      - 11
+      - 12
+      - 4
     type: NATIVE_FILTER
     description: ''
   - id: NATIVE_FILTER-897859f6fe33
@@ -346,6 +346,68 @@ metadata:
       defaultToFirstItem: false
       searchAllOptions: false
       inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-29f95ad24b02
+    name: "\u041A\u043B\u0438\u0435\u043D\u0442"
+    filterType: filter_select
+    targets:
+    - column:
+        name: client
+      datasetUuid: ae19062d-e5f8-4396-b9a2-d8368348889a
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-4313552c3bc0
+    name: "\u0422\u043E\u0432\u0430\u0440"
+    filterType: filter_select
+    targets:
+    - column:
+        name: product
+      datasetUuid: ae19062d-e5f8-4396-b9a2-d8368348889a
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-ca72b12d59b4
+    name: "\u041F\u0435\u0440\u0438\u043E\u0434"
+    filterType: filter_time
+    targets:
+    - {}
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues: {}
     cascadeParentIds: []
     scope:
       rootPath:

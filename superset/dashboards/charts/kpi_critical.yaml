@@ -10,6 +10,11 @@ params:
   - expressionType: SQL
     sqlExpression: severity = 'critical'
     clause: WHERE
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
   metric:
     expressionType: SQL
     sqlExpression: COUNT(*)

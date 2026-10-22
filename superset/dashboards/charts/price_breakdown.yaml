@@ -12,6 +12,11 @@ params:
     sqlExpression: "signal_name = '\u041D\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\
       \u043A\u0443\u0440\u0435\u043D\u0442'"
     clause: WHERE
+  - expressionType: SIMPLE
+    subject: event_date
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
   query_mode: raw
   row_limit: 1000
   server_pagination: false
