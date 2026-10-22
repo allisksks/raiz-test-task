@@ -1,0 +1,43 @@
+slice_name: "\u041A\u043B\u044E\u0447\u0435\u0432\u044B\u0435 \u043A\u043E\u043D\u043A\
+  \u0443\u0440\u0435\u043D\u0442\u044B \u043A\u043B\u0438\u0435\u043D\u0442\u0430"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters:
+  - expressionType: SQL
+    sqlExpression: rank <= 3
+    clause: WHERE
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y'
+  all_columns:
+  - client
+  - channel
+  - rank
+  - competitor
+  - competitor_channel
+  - is_new_competitor
+  - products
+  - overlap_share
+  - price_gap
+  - threat
+  order_by_cols:
+  - '["client", true]'
+  - '["rank", true]'
+  column_config:
+    overlap_share:
+      d3NumberFormat: .1%
+    price_gap:
+      d3NumberFormat: .1%
+    threat:
+      d3NumberFormat: .3f
+query_context: null
+cache_timeout: null
+uuid: 40970cdf-fb67-4781-a59e-20b2dac3fa7e
+version: 1.0.0
+dataset_uuid: 9759ea18-3ac5-452f-bd36-1ff3b21eb37c

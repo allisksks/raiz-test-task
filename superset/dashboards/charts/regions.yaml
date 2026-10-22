@@ -1,5 +1,7 @@
 slice_name: "\u0420\u0435\u0433\u0438\u043E\u043D\u044B \u043F\u0440\u0438\u0441\u0443\
-  \u0442\u0441\u0442\u0432\u0438\u044F"
+  \u0442\u0441\u0442\u0432\u0438\u044F (\u043A\u043B\u0438\u043A \u043F\u043E \u0440\
+  \u0435\u0433\u0438\u043E\u043D\u0443 \u0444\u0438\u043B\u044C\u0442\u0440\u0443\u0435\
+  \u0442 \u0434\u0430\u0448\u0431\u043E\u0440\u0434)"
 description: null
 certified_by: null
 certification_details: null
@@ -10,36 +12,57 @@ params:
   - expressionType: SQL
     sqlExpression: clients > 0
     clause: WHERE
-  query_mode: raw
-  row_limit: 1000
-  server_pagination: false
-  include_search: true
-  table_timestamp_format: '%d.%m.%Y'
-  all_columns:
+  query_mode: aggregate
+  groupby:
   - region
-  - clients
-  - competitors
-  - new_competitors
-  - revenue
-  - margin_pct
-  - plan_margin_pct
-  - margin_pct_deviation
-  - median_price_gap
-  order_by_cols:
-  - '["margin_pct_deviation", true]'
+  metrics:
+  - expressionType: SQL
+    sqlExpression: MAX(clients)
+    label: "\u041A\u043B\u0438\u0435\u043D\u0442\u044B"
+  - expressionType: SQL
+    sqlExpression: MAX(competitors)
+    label: "\u041A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u044B"
+  - expressionType: SQL
+    sqlExpression: MAX(new_competitors)
+    label: "\u041D\u043E\u0432\u044B\u0435 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\
+      \u043D\u0442\u044B"
+  - expressionType: SQL
+    sqlExpression: MAX(revenue)
+    label: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430, \u20BD"
+  - expressionType: SQL
+    sqlExpression: MAX(margin_pct)
+    label: "\u041C\u0430\u0440\u0436\u0430"
+  - expressionType: SQL
+    sqlExpression: MAX(plan_margin_pct)
+    label: "\u041F\u043B\u0430\u043D \u043C\u0430\u0440\u0436\u0438"
+  - expressionType: SQL
+    sqlExpression: MAX(margin_pct_deviation)
+    label: "\u041E\u0442\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u043E\u0442\
+      \ \u043F\u043B\u0430\u043D\u0430"
+  - expressionType: SQL
+    sqlExpression: MAX(median_price_gap)
+    label: "\u0420\u0430\u0437\u0440\u044B\u0432 \u0446\u0435\u043D \u043A\u043E\u043D\
+      \u043A\u0443\u0440\u0435\u043D\u0442\u043E\u0432"
+  timeseries_limit_metric:
+    expressionType: SQL
+    sqlExpression: MAX(margin_pct_deviation)
+    label: "\u041E\u0442\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u043E\u0442\
+      \ \u043F\u043B\u0430\u043D\u0430"
+  order_desc: false
+  row_limit: 100
   column_config:
-    revenue:
+    "\u0412\u044B\u0440\u0443\u0447\u043A\u0430, \u20BD":
       d3NumberFormat: ',.0f'
-    margin_pct:
+    "\u041C\u0430\u0440\u0436\u0430":
       d3NumberFormat: .1%
-    plan_margin_pct:
+    "\u041F\u043B\u0430\u043D \u043C\u0430\u0440\u0436\u0438":
       d3NumberFormat: .1%
-    margin_pct_deviation:
+    "\u041E\u0442\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u043E\u0442 \u043F\u043B\u0430\u043D\u0430":
       d3NumberFormat: .1%
-    median_price_gap:
+    "\u0420\u0430\u0437\u0440\u044B\u0432 \u0446\u0435\u043D \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u043E\u0432":
       d3NumberFormat: .1%
 query_context: null
 cache_timeout: null
-uuid: a65b783c-a471-42be-afb4-dceafae293ca
+uuid: 34b85ebd-8af0-4e9a-9b92-56227c23b3e0
 version: 1.0.0
 dataset_uuid: 9eb235dd-bdd9-4b38-98ab-4ab4104e7aa6

@@ -95,10 +95,48 @@ def test_margin_deviation_signals_are_episodes(db):
     assert len({(s["client"], s["product_group"]) for s in deviations}) == len(deviations)
 
 
-def test_market_share_signals_marked_as_estimate(db):
+def test_market_share_signals_quarterly_and_estimated(db):
     shares = _signals(db, "market_share_change")
-    assert shares
+    assert {(s["region_code"], s["product_group"]) for s in shares} == {
+        ("RU-NVS", "Сухие смеси"),
+        ("RU-NVS", "Клеи и затирки"),
+    }
     assert {s["provenance"] for s in shares} == {"estimate"}
+    assert all("за квартал" in s["title"] for s in shares)
+
+
+def test_no_assortment_exits_in_samples(db):
+    assert _signals(db, "assortment_exit") == []
+
+
+def test_assortment_exit_detected(db, test_engine):
+    from market_map.integrations.prepared import load_prepared
+    from market_map.marts import refresh_marts
+
+    # конкурент перестал продавать позицию: последние наблюдения позиции пропали
+    with test_engine.begin() as conn:
+        product_id = conn.execute(
+            text(
+                "select p.id from core.product p join core.company c on c.id = p.company_id "
+                "where c.name = 'ООО «СибирьСтрой»' order by p.id limit 1"
+            )
+        ).scalar()
+        conn.execute(
+            text(
+                "delete from core.price_observation "
+                "where product_id = :p and observed_at > '2026-09-14'"
+            ),
+            {"p": product_id},
+        )
+    refresh_marts(test_engine)
+    detect_signals(test_engine)
+    exits = _signals(db, "assortment_exit")
+    assert len(exits) == 1
+    assert exits[0]["competitor"] == "ООО «СибирьСтрой»"
+    assert str(exits[0]["event_date"]) == "2026-09-21"
+    # вернуть данные для остальных тестов
+    load_prepared(test_engine, f"sqlite:///{SAMPLES / 'prepared' / 'prepared.sqlite'}")
+    assert _signals(db, "assortment_exit") == []
 
 
 def test_detection_is_idempotent_and_thresholds_apply(db, test_engine):

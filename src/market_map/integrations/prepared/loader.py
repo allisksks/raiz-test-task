@@ -10,7 +10,14 @@ from datetime import date
 
 from sqlalchemy import Connection, Engine, create_engine, text
 
-from market_map.loads import LoadResult, finish_run, product_group_ids, source_ids, start_run
+from market_map.loads import (
+    LoadResult,
+    exclusive_load,
+    finish_run,
+    product_group_ids,
+    source_ids,
+    start_run,
+)
 from market_map.marts import refresh_derived
 from market_map.matching import Matcher, OwnProduct, clean_title, sku_from_title
 from market_map.normalize import channel_code, parse_price, region_code
@@ -268,6 +275,7 @@ def _load_prices(
     result.stats["price_duplicates"] = duplicates
 
 
+@exclusive_load
 def load_prepared(engine: Engine, source_url: str) -> LoadResult:
     """Загружает подготовленную базу по адресу SQLAlchemy (например, sqlite:///…/prepared.sqlite).
 

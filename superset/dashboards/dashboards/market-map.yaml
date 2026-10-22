@@ -165,12 +165,14 @@ position:
     - GRID_ID
     - ROW-2
     meta:
-      chartId: 5
-      uuid: a65b783c-a471-42be-afb4-dceafae293ca
+      chartId: 14
+      uuid: 34b85ebd-8af0-4e9a-9b92-56227c23b3e0
       width: 12
       height: 60
       sliceName: "\u0420\u0435\u0433\u0438\u043E\u043D\u044B \u043F\u0440\u0438\u0441\
-        \u0443\u0442\u0441\u0442\u0432\u0438\u044F"
+        \u0443\u0442\u0441\u0442\u0432\u0438\u044F (\u043A\u043B\u0438\u043A \u043F\
+        \u043E \u0440\u0435\u0433\u0438\u043E\u043D\u0443 \u0444\u0438\u043B\u044C\
+        \u0442\u0440\u0443\u0435\u0442 \u0434\u0430\u0448\u0431\u043E\u0440\u0434)"
   ROW-3:
     type: ROW
     id: ROW-3

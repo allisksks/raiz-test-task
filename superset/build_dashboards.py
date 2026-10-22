@@ -60,6 +60,7 @@ def where(sql: str) -> dict:
 DATASETS = (
     "region_summary", "presence", "signals", "hypotheses", "price_breakdown",
     "price_comparison", "market_share", "margin_plan_fact", "sales", "source_freshness",
+    "client_competitors", "channel_share", "competitor_assortment",
 )  # fmt: skip
 
 TABLE = {
@@ -74,10 +75,12 @@ RUBLES = {"d3NumberFormat": ",.0f"}
 
 # Фильтр по периоду: действует на временную колонку каждого датасета (TIME_COLUMNS)
 PERIOD = "__time_range"
+# Префикс колонки фильтра-диапазона (числовой «от — до»)
+RANGE = "range:"
 TIME_COLUMNS = {
     "signals": "event_date", "hypotheses": "event_date", "price_breakdown": "event_date",
     "price_comparison": "observed_at", "market_share": "month", "margin_plan_fact": "month",
-    "sales": "month",
+    "sales": "month", "channel_share": "month",
 }  # fmt: skip
 
 # Подписи колонок в таблицах и фильтрах
@@ -94,7 +97,12 @@ VERBOSE = {
     "provenance_name": "Факт / оценка", "name": "Источник", "kind": "Тип",
     "reliability": "Достоверность", "refresh_period_name": "Периодичность", "last_load": "Загружено",
     "last_data_text": "Данные по", "records": "Записей", "failed_loads_7d": "Сбоев за 7 дней",
-    "status": "Статус",
+    "status": "Статус", "product": "Товар", "overlap_share": "Доля закупок клиента в пересечении",
+    "threat": "Угроза", "products": "Товаров в пересечении", "is_new_competitor": "Новый конкурент",
+    "competitor_channel": "Канал конкурента", "competitor_product": "Товар конкурента",
+    "competitor_brand": "Бренд", "match_type": "Совпадение", "own_product": "Наш товар",
+    "competitor_price": "Цена конкурента, ₽", "own_price": "Наша цена, ₽", "price_gap": "Разрыв цены",
+    "first_seen": "Появился", "last_seen": "Последнее наблюдение",
 }  # fmt: skip
 
 CHARTS = {
@@ -141,33 +149,36 @@ CHARTS = {
         ),
     ),
     "regions": dict(
-        name="Регионы присутствия",
+        name="Регионы присутствия (клик по региону фильтрует дашборд)",
         dataset="region_summary",
         viz_type="table",
         params=dict(
-            **TABLE,
-            all_columns=[
-                "region",
-                "clients",
-                "competitors",
-                "new_competitors",
-                "revenue",
-                "margin_pct",
-                "plan_margin_pct",
-                "margin_pct_deviation",
-                "median_price_gap",
+            # Агрегированный режим: клик по региону включает кросс-фильтр на весь дашборд
+            query_mode="aggregate",
+            groupby=["region"],
+            metrics=[
+                metric("MAX(clients)", "Клиенты"),
+                metric("MAX(competitors)", "Конкуренты"),
+                metric("MAX(new_competitors)", "Новые конкуренты"),
+                metric("MAX(revenue)", "Выручка, ₽"),
+                metric("MAX(margin_pct)", "Маржа"),
+                metric("MAX(plan_margin_pct)", "План маржи"),
+                metric("MAX(margin_pct_deviation)", "Отклонение от плана"),
+                metric("MAX(median_price_gap)", "Разрыв цен конкурентов"),
             ],
-            order_by_cols=[json.dumps(["margin_pct_deviation", True])],
+            timeseries_limit_metric=metric("MAX(margin_pct_deviation)", "Отклонение от плана"),
+            order_desc=False,
             adhoc_filters=[where("clients > 0")],
+            row_limit=100,
             column_config={
-                "revenue": RUBLES,
-                "margin_pct": PERCENT,
-                "plan_margin_pct": PERCENT,
-                "margin_pct_deviation": PERCENT,
-                "median_price_gap": PERCENT,
+                "Выручка, ₽": RUBLES,
+                "Маржа": PERCENT,
+                "План маржи": PERCENT,
+                "Отклонение от плана": PERCENT,
+                "Разрыв цен конкурентов": PERCENT,
             },
         ),
-    ),  # fmt: skip
+    ),
     "signals": dict(
         name="Лента сигналов",
         dataset="signals",
@@ -243,7 +254,7 @@ CHARTS = {
         ),
     ),
     "market_share": dict(
-        name="Доли рынка (оценка), %",
+        name="Доли рынка, % (оценка по статистике прошлых периодов)",
         dataset="market_share",
         viz_type="echarts_timeseries_line",
         params=dict(
@@ -251,6 +262,7 @@ CHARTS = {
             time_grain_sqla="P1M",
             metrics=[metric("AVG(share) * 100", "Доля, %")],
             groupby=["player"],
+            adhoc_filters=[where("method_code = 'history'")],
             row_limit=10000,
             show_legend=True,
             y_axis_format=".0f",
@@ -291,18 +303,88 @@ CHARTS = {
         ),
     ),
     "sales_by_client": dict(
-        name="Клиенты: выручка и маржа",
+        name="Клиенты и номенклатура: выручка, маржа, цена",
         dataset="sales",
         viz_type="table",
         params=dict(
             query_mode="aggregate",
-            groupby=["region", "channel", "client", "product_group"],
+            groupby=["region", "channel", "client", "product_group", "product"],
             metrics=[
                 metric("SUM(revenue)", "Выручка, ₽"),
                 metric("SUM(margin) / NULLIF(SUM(revenue), 0) * 100", "Маржа, %"),
+                metric("SUM(revenue) / NULLIF(SUM(quantity), 0)", "Средняя цена, ₽"),
             ],
-            row_limit=1000,
+            row_limit=5000,
             include_search=True,
+        ),
+    ),
+    "key_competitors": dict(
+        name="Ключевые конкуренты клиента",
+        dataset="client_competitors",
+        viz_type="table",
+        params=dict(
+            **TABLE,
+            all_columns=[
+                "client",
+                "channel",
+                "rank",
+                "competitor",
+                "competitor_channel",
+                "is_new_competitor",
+                "products",
+                "overlap_share",
+                "price_gap",
+                "threat",
+            ],
+            order_by_cols=[json.dumps(["client", True]), json.dumps(["rank", True])],
+            adhoc_filters=[where("rank <= 3")],
+            column_config={
+                "overlap_share": PERCENT,
+                "price_gap": PERCENT,
+                "threat": {"d3NumberFormat": ".3f"},
+            },
+        ),
+    ),
+    "competitor_assortment": dict(
+        name="Конкурент: ассортимент и цены",
+        dataset="competitor_assortment",
+        viz_type="table",
+        params=dict(
+            **TABLE,
+            all_columns=[
+                "competitor",
+                "competitor_product",
+                "competitor_brand",
+                "match_type",
+                "own_product",
+                "competitor_price",
+                "own_price",
+                "price_gap",
+                "first_seen",
+                "last_seen",
+                "status",
+                "is_new_competitor",
+            ],
+            order_by_cols=[
+                json.dumps(["competitor", True]),
+                json.dumps(["competitor_product", True]),
+            ],
+            column_config={"competitor_price": RUBLES, "own_price": RUBLES, "price_gap": PERCENT},
+        ),
+    ),
+    "channel_share": dict(
+        name="Продажи по типу клиента, ₽",
+        dataset="channel_share",
+        viz_type="echarts_timeseries_bar",
+        params=dict(
+            x_axis="month",
+            time_grain_sqla="P1M",
+            metrics=[metric("SUM(revenue)", "Выручка, ₽")],
+            groupby=["channel"],
+            stack="Stack",
+            row_limit=10000,
+            show_legend=True,
+            y_axis_format="~s",
         ),
     ),
 }
@@ -343,8 +425,11 @@ DASHBOARDS = {
             [("signals", 12, 60)],
             [("hypotheses", 12, 55)],
             [("price_breakdown", 12, 70)],
+            [("key_competitors", 12, 60)],
+            [("competitor_assortment", 12, 60)],
             [("price_gap", 6, 60), ("market_share", 6, 60)],
-            [("margin_plan_fact", 6, 60), ("sales_by_client", 6, 60)],
+            [("margin_plan_fact", 6, 60), ("channel_share", 6, 60)],
+            [("sales_by_client", 12, 70)],
         ],
         # По умолчанию открывается сценарий из ТЗ: новый конкурент в Новосибирске.
         # Группа товаров по умолчанию — только для графиков: у сигнала «новый конкурент»
@@ -353,11 +438,14 @@ DASHBOARDS = {
             ("Регион", "region", "signals", "Новосибирская область", ()),
             ("Конкурент", "competitor", "price_comparison", None, ()),
             ("Группа товаров", "product_group", "signals", "Сухие смеси",
-             ("signals", "hypotheses", "price_breakdown", "sales_by_client")),
+             ("signals", "hypotheses", "price_breakdown", "sales_by_client", "key_competitors",
+              "competitor_assortment", "channel_share")),
             ("Канал", "channel", "sales", None, ()),
             ("Клиент", "client", "sales", None, ()),
             ("Товар", "product", "sales", None, ()),
             ("Период", PERIOD, None, None, ()),
+            ("Новый конкурент", "is_new_competitor", "competitor_assortment", None, ()),
+            ("Цена конкурента, ₽", RANGE + "competitor_price", "competitor_assortment", None, ()),
         ],
     ),
 }  # fmt: skip
@@ -504,6 +592,14 @@ def native_filters(filters: list, datasets: dict, charts: dict, slug: str) -> li
                 }
             )
             continue
+        filter_type = "filter_select"
+        control_values = {
+            "multiSelect": True, "enableEmptyFilter": False, "defaultToFirstItem": False,
+            "searchAllOptions": False, "inverseSelection": False,
+        }  # fmt: skip
+        if column.startswith(RANGE):
+            column = column.removeprefix(RANGE)
+            filter_type, control_values = "filter_range", {"enableEmptyFilter": False}
         if default is not None:
             mask = {
                 "filterState": {"value": [default]},
@@ -513,13 +609,10 @@ def native_filters(filters: list, datasets: dict, charts: dict, slug: str) -> li
             {
                 "id": f"NATIVE_FILTER-{uuid.uuid5(uuid.NAMESPACE_URL, slug + column).hex[:12]}",
                 "name": name,
-                "filterType": "filter_select",
+                "filterType": filter_type,
                 "targets": [{"datasetId": datasets[dataset], "column": {"name": column}}],
                 "defaultDataMask": mask,
-                "controlValues": {
-                    "multiSelect": True, "enableEmptyFilter": False, "defaultToFirstItem": False,
-                    "searchAllOptions": False, "inverseSelection": False,
-                },
+                "controlValues": control_values,
                 "cascadeParentIds": [],
                 "scope": {"rootPath": ["ROOT_ID"], "excluded": [charts[k] for k in excluded]},
                 "type": "NATIVE_FILTER",
@@ -567,6 +660,17 @@ def ensure_dashboards(api: Superset, datasets: dict, charts: dict) -> dict[str, 
     return ids
 
 
+def remove_orphan_charts(api: Superset, charts: dict[str, int], dashboards: dict[str, int]):
+    """Удаляет графики наших дашбордов, которых больше нет в CHARTS: при переименовании
+    графика создаётся новый (поиск идёт по названию), старый иначе остался бы на дашборде."""
+    known = set(charts.values())
+    for dashboard_id in dashboards.values():
+        for chart in api.request("GET", f"/api/v1/dashboard/{dashboard_id}/charts")["result"]:
+            if chart["id"] not in known:
+                api.request("DELETE", f"/api/v1/chart/{chart['id']}")
+                print(f"Удалён устаревший график: {chart['slice_name']}")
+
+
 def export(api: Superset, charts: dict[str, int], dashboards: dict[str, int]) -> None:
     """Выгрузка штатным экспортом. Файлы графиков и дашбордов называются по ключам из
     CHARTS/DASHBOARDS, а не по id: id меняются от стенда к стенду, и без этого каждая
@@ -609,6 +713,7 @@ def main() -> None:
     set_time_columns(api, datasets)
     charts = ensure_charts(api, datasets)
     dashboards = ensure_dashboards(api, datasets, charts)
+    remove_orphan_charts(api, charts, dashboards)
     print(f"Датасетов: {len(datasets)}, графиков: {len(charts)}, дашбордов: {len(dashboards)}")
     if args.export:
         export(api, charts, dashboards)

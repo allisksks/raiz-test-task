@@ -17,7 +17,14 @@ from market_map.integrations.onec.source import (
     OneCSource,
     months,
 )
-from market_map.loads import LoadResult, finish_run, product_group_ids, source_ids, start_run
+from market_map.loads import (
+    LoadResult,
+    exclusive_load,
+    finish_run,
+    product_group_ids,
+    source_ids,
+    start_run,
+)
 from market_map.marts import refresh_derived
 from market_map.normalize import channel_code, region_code
 
@@ -248,6 +255,7 @@ def _load_margin_plan(
     result.stats["margin_plan_rows"] = len(plans)
 
 
+@exclusive_load
 def load_onec(
     engine: Engine, source: OneCSource, start: date | None = None, end: date | None = None
 ) -> LoadResult:

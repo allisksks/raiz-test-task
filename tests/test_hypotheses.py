@@ -153,3 +153,11 @@ def test_price_breakdown_separates_facts_and_estimates(db):
     assert breakdown["Цена конкурента к нашей закупочной"][0] < -0.1
     assert {p for _, p in breakdown.values()} == {"fact", "estimate"}
     assert breakdown["Закупочная цена конкурента при нашей наценке"][1] == "estimate"
+
+
+@pytest.mark.db
+def test_detecting_signals_alone_keeps_hypotheses(db, test_engine):
+    from market_map.signals import detect_signals
+
+    detect_signals(test_engine)
+    assert db.execute(text("select count(*) from core.hypothesis")).scalar() > 0

@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 
 from market_map.config import get_settings
@@ -69,20 +69,10 @@ def _month(value: str) -> date:
 
 def load_1c(args: argparse.Namespace) -> int:
     """Загружает справочники, продажи и план маржи из 1С."""
-    from market_map.integrations.onec import FileSource, HttpSource, load_onec
+    from market_map.integrations.onec import load_onec
+    from market_map.pipeline import onec_source
 
-    settings = get_settings()
-    start, end = args.start, args.end
-    if args.path or not settings.onec_odata_url:
-        source = FileSource(args.path or Path(settings.onec_files_dir))
-    else:
-        source = HttpSource(settings.onec_odata_url, settings.onec_user, settings.onec_password)
-        if start is None:  # по умолчанию с живой базы — текущий и два предыдущих месяца
-            end = end or date.today().replace(day=1)
-            start = end
-            for _ in range(2):
-                start = (start - timedelta(days=1)).replace(day=1)
-
+    source, start, end = onec_source(get_settings(), args.path, args.start, args.end)
     result = load_onec(get_engine(), source, start, end)
     for name, count in result.stats.items():
         print(f"{name}: {count}")
@@ -103,6 +93,23 @@ def load_prepared(args: argparse.Namespace) -> int:
     for entity, reason, _ in result.rejected[:20]:
         print(f"Отклонено ({entity}): {reason}", file=sys.stderr)
     print(f"Журнал загрузки: staging.load_run id={result.run_id}")
+    return 0
+
+
+def run_pipeline_cmd(args: argparse.Namespace) -> int:
+    """Полное обновление: миграции, 1С, подготовленная база (витрины, сигналы, гипотезы)."""
+    from market_map.pipeline import run_pipeline
+
+    for name, result in run_pipeline(get_engine(), get_settings()).items():
+        print(f"{name}: {result.stats} (staging.load_run id={result.run_id})")
+    return 0
+
+
+def schedule_cmd(args: argparse.Namespace) -> int:
+    """Запускает обновление каждый день в SCHEDULE_TIME (часовой пояс SCHEDULE_TZ)."""
+    from market_map.pipeline import schedule
+
+    schedule(get_engine(), get_settings())
     return 0
 
 
@@ -136,6 +143,11 @@ def main(argv: list[str] | None = None) -> int:
     prepared = commands.add_parser("load-prepared", help=load_prepared.__doc__)
     prepared.add_argument("--path", type=Path, help="файл SQLite с подготовленной базой")
     prepared.set_defaults(func=load_prepared)
+
+    commands.add_parser("run-pipeline", help=run_pipeline_cmd.__doc__).set_defaults(
+        func=run_pipeline_cmd
+    )
+    commands.add_parser("schedule", help=schedule_cmd.__doc__).set_defaults(func=schedule_cmd)
 
     args = parser.parse_args(argv)
     if getattr(args, "seed", 0) is None:

@@ -4,6 +4,7 @@ from importlib import resources
 
 from sqlalchemy import Connection, Engine, text
 
+from market_map.loads import exclusive_load
 from market_map.reference import CHANNELS, REGIONS
 
 MIGRATIONS_TABLE = "public.schema_migrations"
@@ -62,6 +63,7 @@ def seed_reference(conn: Connection) -> None:
     )
 
 
+@exclusive_load
 def migrate(engine: Engine) -> list[str]:
     with engine.begin() as conn:
         new = apply_migrations(conn)
