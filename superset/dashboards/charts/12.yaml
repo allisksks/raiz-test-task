@@ -1,0 +1,45 @@
+slice_name: "\u0420\u0435\u0433\u0438\u043E\u043D\u044B \u043F\u0440\u0438\u0441\u0443\
+  \u0442\u0441\u0442\u0432\u0438\u044F"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters:
+  - expressionType: SQL
+    sqlExpression: clients > 0
+    clause: WHERE
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y'
+  all_columns:
+  - region
+  - clients
+  - competitors
+  - new_competitors
+  - revenue
+  - margin_pct
+  - plan_margin_pct
+  - margin_pct_deviation
+  - median_price_gap
+  order_by_cols:
+  - '["margin_pct_deviation", true]'
+  column_config:
+    revenue:
+      d3NumberFormat: ',.0f'
+    margin_pct:
+      d3NumberFormat: .1%
+    plan_margin_pct:
+      d3NumberFormat: .1%
+    margin_pct_deviation:
+      d3NumberFormat: .1%
+    median_price_gap:
+      d3NumberFormat: .1%
+query_context: null
+cache_timeout: null
+uuid: a65b783c-a471-42be-afb4-dceafae293ca
+version: 1.0.0
+dataset_uuid: 9eb235dd-bdd9-4b38-98ab-4ab4104e7aa6

@@ -1,0 +1,40 @@
+slice_name: "\u0426\u0435\u043D\u043E\u0432\u0430\u044F \u0430\u0440\u0445\u0438\u0442\
+  \u0435\u043A\u0442\u0443\u0440\u0430 \u0442\u043E\u0432\u0430\u0440\u0430 \u043A\
+  \u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u0430"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters:
+  - expressionType: SQL
+    sqlExpression: "signal_name = '\u041D\u043E\u0432\u044B\u0439 \u043A\u043E\u043D\
+      \u043A\u0443\u0440\u0435\u043D\u0442'"
+    clause: WHERE
+  query_mode: raw
+  row_limit: 1000
+  server_pagination: false
+  include_search: true
+  table_timestamp_format: '%d.%m.%Y'
+  all_columns:
+  - region
+  - competitor
+  - signal_name
+  - step
+  - component
+  - value
+  - unit
+  - provenance_name
+  - note
+  order_by_cols:
+  - '["signal_id", true]'
+  - '["step", true]'
+  column_config:
+    value:
+      d3NumberFormat: ',.2f'
+query_context: null
+cache_timeout: null
+uuid: 828bae13-7111-43d7-8b0f-8d529a37c6d7
+version: 1.0.0
+dataset_uuid: 87a28f6c-d2d4-423c-8be2-1032b1487b14

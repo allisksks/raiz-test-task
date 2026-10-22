@@ -1,0 +1,23 @@
+slice_name: "\u041A\u0430\u0440\u0442\u0430: \u043D\u043E\u0432\u044B\u0435 \u043A\
+  \u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u044B"
+description: null
+certified_by: null
+certification_details: null
+viz_type: country_map
+params:
+  viz_type: country_map
+  adhoc_filters: []
+  select_country: russia
+  entity: map_code
+  metric:
+    expressionType: SQL
+    sqlExpression: SUM(new_competitors)
+    label: "\u041D\u043E\u0432\u044B\u0435 \u043A\u043E\u043D\u043A\u0443\u0440\u0435\
+      \u043D\u0442\u044B"
+  linear_color_scheme: oranges
+  number_format: .0f
+query_context: null
+cache_timeout: null
+uuid: c3b47032-b7df-402c-86cd-c9090d069e7b
+version: 1.0.0
+dataset_uuid: 9eb235dd-bdd9-4b38-98ab-4ab4104e7aa6

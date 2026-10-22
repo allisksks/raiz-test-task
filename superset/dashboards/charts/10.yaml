@@ -1,0 +1,29 @@
+slice_name: "\u041A\u043B\u0438\u0435\u043D\u0442\u044B: \u0432\u044B\u0440\u0443\u0447\
+  \u043A\u0430 \u0438 \u043C\u0430\u0440\u0436\u0430"
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  viz_type: table
+  adhoc_filters: []
+  query_mode: aggregate
+  groupby:
+  - region
+  - channel
+  - client
+  - product_group
+  metrics:
+  - expressionType: SQL
+    sqlExpression: SUM(revenue)
+    label: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430, \u20BD"
+  - expressionType: SQL
+    sqlExpression: SUM(margin) / NULLIF(SUM(revenue), 0) * 100
+    label: "\u041C\u0430\u0440\u0436\u0430, %"
+  row_limit: 1000
+  include_search: true
+query_context: null
+cache_timeout: null
+uuid: 9974ac49-1a58-4755-aa91-8ca4ba761933
+version: 1.0.0
+dataset_uuid: ae19062d-e5f8-4396-b9a2-d8368348889a

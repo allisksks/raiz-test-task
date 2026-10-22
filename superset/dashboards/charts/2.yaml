@@ -1,0 +1,27 @@
+slice_name: "\u041C\u0430\u0440\u0436\u0430: \u043F\u043B\u0430\u043D \u0438 \u0444\
+  \u0430\u043A\u0442, %"
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  viz_type: echarts_timeseries_line
+  adhoc_filters: []
+  x_axis: month
+  time_grain_sqla: P1M
+  metrics:
+  - expressionType: SQL
+    sqlExpression: SUM(margin) / NULLIF(SUM(revenue), 0) * 100
+    label: "\u0424\u0430\u043A\u0442, %"
+  - expressionType: SQL
+    sqlExpression: SUM(plan_revenue * plan_margin_pct) / NULLIF(SUM(plan_revenue),
+      0) * 100
+    label: "\u041F\u043B\u0430\u043D, %"
+  row_limit: 10000
+  show_legend: true
+  y_axis_format: .1f
+query_context: null
+cache_timeout: null
+uuid: 7346d9a9-ad61-42ba-b8a1-a5794ddeba5c
+version: 1.0.0
+dataset_uuid: 44bdc41e-8021-4cea-a682-0fe56c886c0c

@@ -1,0 +1,365 @@
+dashboard_title: "\u0414\u0438\u0430\u0433\u043D\u043E\u0441\u0442\u0438\u043A\u0430\
+  : \u0441\u0438\u0433\u043D\u0430\u043B \u2192 \u043F\u0440\u0438\u0447\u0438\u043D\
+  \u0430"
+description: null
+css: null
+slug: diagnostics
+certified_by: null
+certification_details: null
+published: true
+uuid: 2e307a83-f9bc-457e-9ee8-63cf19fd45c4
+position:
+  DASHBOARD_VERSION_KEY: v2
+  ROOT_ID:
+    type: ROOT
+    id: ROOT_ID
+    children:
+    - GRID_ID
+  GRID_ID:
+    type: GRID
+    id: GRID_ID
+    children:
+    - ROW-0
+    - ROW-1
+    - ROW-2
+    - ROW-3
+    - ROW-4
+    - ROW-5
+    parents:
+    - ROOT_ID
+  HEADER_ID:
+    type: HEADER
+    id: HEADER_ID
+    meta:
+      text: "\u0414\u0438\u0430\u0433\u043D\u043E\u0441\u0442\u0438\u043A\u0430: \u0441\
+        \u0438\u0433\u043D\u0430\u043B \u2192 \u043F\u0440\u0438\u0447\u0438\u043D\
+        \u0430"
+  ROW-0:
+    type: ROW
+    id: ROW-0
+    children:
+    - MARKDOWN-0-0
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  MARKDOWN-0-0:
+    type: MARKDOWN
+    id: MARKDOWN-0-0
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-0
+    meta:
+      code: "### \u0414\u0438\u0430\u0433\u043D\u043E\u0441\u0442\u0438\u043A\u0430\
+        : \u043A\u043B\u0438\u0435\u043D\u0442 \u2192 \u0440\u0435\u0433\u0438\u043E\
+        \u043D \u2192 \u0442\u043E\u0432\u0430\u0440 \u2192 \u043A\u043E\u043D\u043A\
+        \u0443\u0440\u0435\u043D\u0442 \u2192 \u0446\u0435\u043D\u0430 \u2192 \u0438\
+        \u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0435 \u2192 \u043F\u0440\u0438\
+        \u0447\u0438\u043D\u0430\n\n\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435\
+        \ \u0440\u0435\u0433\u0438\u043E\u043D, \u043A\u043E\u043D\u043A\u0443\u0440\
+        \u0435\u043D\u0442\u0430 \u0438 \u0433\u0440\u0443\u043F\u043F\u0443 \u0442\
+        \u043E\u0432\u0430\u0440\u043E\u0432 \u0432 \u0444\u0438\u043B\u044C\u0442\
+        \u0440\u0430\u0445 \u0441\u043B\u0435\u0432\u0430. **\u0413\u0438\u043F\u043E\
+        \u0442\u0435\u0437\u044B \u2014 \u044D\u0442\u043E \u0432\u044B\u0432\u043E\
+        \u0434\u044B,\n\u0430 \u043D\u0435 \u0444\u0430\u043A\u0442\u044B**: \u0443\
+        \ \u043A\u0430\u0436\u0434\u043E\u0439 \u0435\u0441\u0442\u044C \u043E\u0446\
+        \u0435\u043D\u043A\u0430 \u0438 \u0434\u043E\u0432\u043E\u0434\u044B. \u0426\
+        \u0435\u043D\u043E\u0432\u0430\u044F \u0430\u0440\u0445\u0438\u0442\u0435\u043A\
+        \u0442\u0443\u0440\u0430 \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\
+        \u0442, \u0433\u0434\u0435\n\u0437\u0430\u043A\u0430\u043D\u0447\u0438\u0432\
+        \u0430\u044E\u0442\u0441\u044F \u0444\u0430\u043A\u0442\u044B (\u043D\u0430\
+        \u0448\u0430 \u0437\u0430\u043A\u0443\u043F\u043E\u0447\u043D\u0430\u044F\
+        \ \u0446\u0435\u043D\u0430 \u0438\u0437 1\u0421, \u0446\u0435\u043D\u044B\
+        \ \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433\u0430) \u0438\
+        \ \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0442\u0441\u044F \u043E\u0446\
+        \u0435\u043D\u043A\u0438."
+      width: 12
+      height: 25
+  ROW-1:
+    type: ROW
+    id: ROW-1
+    children:
+    - CHART-signals
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-signals:
+    type: CHART
+    id: CHART-signals
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-1
+    meta:
+      chartId: 7
+      uuid: 8748d08a-28b4-49d2-b9d2-6d7a33d3a658
+      width: 12
+      height: 60
+      sliceName: "\u041B\u0435\u043D\u0442\u0430 \u0441\u0438\u0433\u043D\u0430\u043B\
+        \u043E\u0432"
+  ROW-2:
+    type: ROW
+    id: ROW-2
+    children:
+    - CHART-hypotheses
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-hypotheses:
+    type: CHART
+    id: CHART-hypotheses
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-2
+    meta:
+      chartId: 3
+      uuid: c7bafb4f-a11b-4488-b42e-b7019cbe46a2
+      width: 12
+      height: 55
+      sliceName: "\u0413\u0438\u043F\u043E\u0442\u0435\u0437\u044B: \u0437\u0430 \u0441\
+        \u0447\u0451\u0442 \u0447\u0435\u0433\u043E \u043A\u043E\u043D\u043A\u0443\
+        \u0440\u0435\u043D\u0442 \u0434\u0435\u0448\u0435\u0432\u043B\u0435"
+  ROW-3:
+    type: ROW
+    id: ROW-3
+    children:
+    - CHART-price_breakdown
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-price_breakdown:
+    type: CHART
+    id: CHART-price_breakdown
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-3
+    meta:
+      chartId: 9
+      uuid: 828bae13-7111-43d7-8b0f-8d529a37c6d7
+      width: 12
+      height: 70
+      sliceName: "\u0426\u0435\u043D\u043E\u0432\u0430\u044F \u0430\u0440\u0445\u0438\
+        \u0442\u0435\u043A\u0442\u0443\u0440\u0430 \u0442\u043E\u0432\u0430\u0440\u0430\
+        \ \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u0430"
+  ROW-4:
+    type: ROW
+    id: ROW-4
+    children:
+    - CHART-price_gap
+    - CHART-market_share
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-price_gap:
+    type: CHART
+    id: CHART-price_gap
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-4
+    meta:
+      chartId: 5
+      uuid: ad9de393-3011-4a84-9b64-f1fb8d6308ad
+      width: 6
+      height: 60
+      sliceName: "\u0420\u0430\u0437\u0440\u044B\u0432 \u0446\u0435\u043D\u044B \u043A\
+        \u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442\u043E\u0432 \u0441 \u043D\
+        \u0430\u0448\u0435\u0439, %"
+  CHART-market_share:
+    type: CHART
+    id: CHART-market_share
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-4
+    meta:
+      chartId: 8
+      uuid: 34cef677-f124-4472-ba55-47cffeb4fa32
+      width: 6
+      height: 60
+      sliceName: "\u0414\u043E\u043B\u0438 \u0440\u044B\u043D\u043A\u0430 (\u043E\u0446\
+        \u0435\u043D\u043A\u0430), %"
+  ROW-5:
+    type: ROW
+    id: ROW-5
+    children:
+    - CHART-margin_plan_fact
+    - CHART-sales_by_client
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    meta:
+      background: BACKGROUND_TRANSPARENT
+  CHART-margin_plan_fact:
+    type: CHART
+    id: CHART-margin_plan_fact
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-5
+    meta:
+      chartId: 2
+      uuid: 7346d9a9-ad61-42ba-b8a1-a5794ddeba5c
+      width: 6
+      height: 60
+      sliceName: "\u041C\u0430\u0440\u0436\u0430: \u043F\u043B\u0430\u043D \u0438\
+        \ \u0444\u0430\u043A\u0442, %"
+  CHART-sales_by_client:
+    type: CHART
+    id: CHART-sales_by_client
+    children: []
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-5
+    meta:
+      chartId: 10
+      uuid: 9974ac49-1a58-4755-aa91-8ca4ba761933
+      width: 6
+      height: 60
+      sliceName: "\u041A\u043B\u0438\u0435\u043D\u0442\u044B: \u0432\u044B\u0440\u0443\
+        \u0447\u043A\u0430 \u0438 \u043C\u0430\u0440\u0436\u0430"
+metadata:
+  native_filter_configuration:
+  - id: NATIVE_FILTER-d7ecd4339666
+    name: "\u0420\u0435\u0433\u0438\u043E\u043D"
+    filterType: filter_select
+    targets:
+    - column:
+        name: region
+      datasetUuid: 5dd71ed1-c661-42db-8135-6a7e6795825b
+    defaultDataMask:
+      filterState:
+        value:
+        - "\u041D\u043E\u0432\u043E\u0441\u0438\u0431\u0438\u0440\u0441\u043A\u0430\
+          \u044F \u043E\u0431\u043B\u0430\u0441\u0442\u044C"
+      extraFormData:
+        filters:
+        - col: region
+          op: IN
+          val:
+          - "\u041D\u043E\u0432\u043E\u0441\u0438\u0431\u0438\u0440\u0441\u043A\u0430\
+            \u044F \u043E\u0431\u043B\u0430\u0441\u0442\u044C"
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-23b38a319b82
+    name: "\u041A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0442"
+    filterType: filter_select
+    targets:
+    - column:
+        name: competitor
+      datasetUuid: 1cbbbbef-044b-4166-b4c1-17a1c0f47a0c
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-4dc307c3991a
+    name: "\u0413\u0440\u0443\u043F\u043F\u0430 \u0442\u043E\u0432\u0430\u0440\u043E\
+      \u0432"
+    filterType: filter_select
+    targets:
+    - column:
+        name: product_group
+      datasetUuid: 5dd71ed1-c661-42db-8135-6a7e6795825b
+    defaultDataMask:
+      filterState:
+        value:
+        - "\u0421\u0443\u0445\u0438\u0435 \u0441\u043C\u0435\u0441\u0438"
+      extraFormData:
+        filters:
+        - col: product_group
+          op: IN
+          val:
+          - "\u0421\u0443\u0445\u0438\u0435 \u0441\u043C\u0435\u0441\u0438"
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded:
+      - 7
+      - 3
+      - 9
+      - 10
+    type: NATIVE_FILTER
+    description: ''
+  - id: NATIVE_FILTER-897859f6fe33
+    name: "\u041A\u0430\u043D\u0430\u043B"
+    filterType: filter_select
+    targets:
+    - column:
+        name: channel
+      datasetUuid: ae19062d-e5f8-4396-b9a2-d8368348889a
+    defaultDataMask:
+      filterState: {}
+      extraFormData: {}
+    controlValues:
+      multiSelect: true
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      searchAllOptions: false
+      inverseSelection: false
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    type: NATIVE_FILTER
+    description: ''
+  cross_filters_enabled: true
+  refresh_frequency: 0
+  timed_refresh_immune_slices: []
+  expanded_slices: {}
+  color_scheme: ''
+  label_colors: {}
+  shared_label_colors: []
+  map_label_colors: {}
+  color_scheme_domain: []
+version: 1.0.0
