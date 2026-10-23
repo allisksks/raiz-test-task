@@ -76,5 +76,11 @@ jobs:
         run: test "$(docker compose exec -T db psql -U market_map -d superset -tAc 'select count(*) from dashboards')" = 2
       - name: Superset health
         run: curl -fs http://localhost:8088/health
+      - name: Metabase dashboards built
+        run: |
+          session=$(curl -fs -H 'Content-Type: application/json' -d '{"username":"admin@example.com","password":"market-map-2026"}' http://localhost:3000/api/session | jq -r .id)
+          n=$(curl -fs -H "X-Metabase-Session: $session" 'http://localhost:3000/api/search?models=dashboard' | jq '[.data[] | select(.collection.name == "Market Map")] | length')
+          test "$n" = 2
+          curl -fs -H "X-Metabase-Session: $session" http://localhost:3000/api/geojson/russia_regions > /dev/null
       - if: failure()
         run: docker compose logs
