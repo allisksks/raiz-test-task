@@ -92,5 +92,53 @@ services:
       timeout: 5s
       retries: 30
 
+  # Вторая BI: Metabase поверх тех же витрин marts
+  metabase:
+    image: metabase/metabase:v0.50.36
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      MB_SITE_URL: http://localhost:${METABASE_PORT:-3000}
+      MB_SITE_LOCALE: ru
+      MB_ANON_TRACKING_ENABLED: "false"
+      MB_CHECK_FOR_UPDATES: "false"
+      MB_LOAD_SAMPLE_CONTENT: "false"
+      JAVA_TIMEZONE: Europe/Moscow
+    ports:
+      - "${METABASE_PORT:-3000}:3000"
+    volumes:
+      - metabase-data:/metabase-data
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 30
+
+  # Дашборды Metabase как код (metabase/provision.py): собирает их при каждом старте
+  # и раздаёт Metabase карту регионов. Healthy — когда дашборды готовы.
+  metabase-provision:
+    image: market-map-app
+    build: .
+    entrypoint: ["python", "/metabase/provision.py", "--serve"]
+    restart: on-failure
+    environment:
+      <<: *db-env
+      METABASE_URL: http://metabase:3000
+      METABASE_ADMIN_EMAIL: ${METABASE_ADMIN_EMAIL:-admin@example.com}
+      METABASE_ADMIN_PASSWORD: ${METABASE_ADMIN_PASSWORD:-market-map-2026}
+    volumes:
+      - ./metabase:/metabase:ro
+    depends_on:
+      metabase:
+        condition: service_healthy
+      scheduler:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/metabase-provisioned"]
+      interval: 5s
+      timeout: 3s
+      retries: 120
+
 volumes:
   db-data:
+  metabase-data:
